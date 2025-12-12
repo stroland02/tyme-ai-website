@@ -89,7 +89,8 @@ export function Footer() {
 
           {/* Bottom Bar */}
           <div className="mt-12 border-t border-foreground/10 pt-8 text-center text-sm text-foreground/60">
-            <p>&copy; {new Date().getFullYear()} Tyme AI. All rights reserved.</p>
+            <p className="mb-2">&copy; {new Date().getFullYear()} Tyme AI. All rights reserved.</p>
+            <p className="text-xs">Owned by Sebastian Roland</p>
           </div>
         </div>
       </Container>
