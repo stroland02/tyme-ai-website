@@ -5,6 +5,8 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Container } from "../layout/Container";
 import { Button } from "../ui/Button";
+import { AnimatedGrid } from "../ui/AnimatedGrid";
+import { ParticleBackground } from "../ui/ParticleBackground";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -110,8 +112,17 @@ export function Hero() {
       ref={containerRef}
       className="relative py-20 md:py-32 overflow-hidden"
     >
+      {/* Animated Backgrounds */}
+      <div className="absolute inset-0 z-0">
+        <AnimatedGrid />
+        <ParticleBackground />
+      </div>
+
+      {/* Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background z-0" />
+
       <Container>
-        <div className="mx-auto max-w-4xl text-center">
+        <div className="relative z-10 mx-auto max-w-4xl text-center">
           {/* Badge/Label */}
           <div
             ref={badgeRef}
