@@ -9,22 +9,22 @@ export function Hero() {
         <div className="mx-auto max-w-4xl text-center">
           {/* Badge/Label */}
           <div className="mb-6 inline-flex items-center rounded-full border border-foreground/20 px-4 py-1.5 text-sm">
-            <span className="text-foreground/60">AI Solutions for Modern Businesses</span>
+            <span className="text-foreground/60">AI & Web Development Solutions</span>
           </div>
 
           {/* Main Headline */}
           <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
             Transform Your Business with{" "}
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              AI-Powered
+              AI-Powered & Modern Web
             </span>{" "}
             Solutions
           </h1>
 
           {/* Subheadline */}
           <p className="mb-10 text-lg text-foreground/60 sm:text-xl md:text-2xl">
-            Custom AI/ML development, automation, and integration services to help
-            you scale faster and smarter.
+            Custom AI/ML development, modern web applications, e-commerce solutions,
+            and automation services to help you scale faster and smarter.
           </p>
 
           {/* CTA Buttons */}

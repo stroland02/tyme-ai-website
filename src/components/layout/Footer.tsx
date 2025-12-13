@@ -11,7 +11,7 @@ export function Footer() {
             <div className="space-y-4">
               <h3 className="text-lg font-bold">Tyme AI</h3>
               <p className="text-sm text-foreground/60">
-                AI/ML solutions for modern businesses
+                AI/ML & Web Development solutions for modern businesses
               </p>
             </div>
 
@@ -21,17 +21,17 @@ export function Footer() {
               <ul className="space-y-2 text-sm text-foreground/60">
                 <li>
                   <Link href="/services" className="hover:text-foreground">
-                    AI Consulting
+                    Web Development
                   </Link>
                 </li>
                 <li>
                   <Link href="/services" className="hover:text-foreground">
-                    Custom AI Development
+                    E-commerce Solutions
                   </Link>
                 </li>
                 <li>
                   <Link href="/services" className="hover:text-foreground">
-                    AI Integration
+                    AI/ML Development
                   </Link>
                 </li>
                 <li>

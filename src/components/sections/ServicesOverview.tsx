@@ -3,40 +3,60 @@ import { Container } from "../layout/Container";
 
 const services = [
   {
+    title: "Custom Web Applications",
+    description:
+      "Full-stack web application development using modern frameworks like Next.js, React, and Django for scalable solutions.",
+    icon: "💻",
+    category: "web",
+  },
+  {
     title: "AI/ML Consulting",
     description:
       "Strategic guidance to identify AI opportunities and develop implementation roadmaps tailored to your business goals.",
     icon: "🎯",
+    category: "ai",
+  },
+  {
+    title: "E-commerce Solutions",
+    description:
+      "Build powerful online stores with integrated payment systems, inventory management, and seamless user experiences.",
+    icon: "🛒",
+    category: "web",
   },
   {
     title: "Custom AI Development",
     description:
       "Build bespoke machine learning models and AI systems designed specifically for your unique use cases.",
     icon: "🤖",
+    category: "ai",
   },
   {
-    title: "AI Integration",
+    title: "Website Design & Development",
     description:
-      "Seamlessly integrate AI capabilities into your existing systems and workflows with minimal disruption.",
-    icon: "🔗",
+      "Modern, responsive, and high-performance websites that drive engagement and convert visitors into customers.",
+    icon: "🎨",
+    category: "web",
   },
   {
     title: "Automation Solutions",
     description:
       "Automate repetitive tasks and workflows using AI to increase efficiency and reduce operational costs.",
     icon: "⚡",
+    category: "ai",
+  },
+  {
+    title: "API Development & Integration",
+    description:
+      "RESTful APIs, third-party integrations, and microservices architecture to connect your systems seamlessly.",
+    icon: "🔗",
+    category: "web",
   },
   {
     title: "Data Analysis & Insights",
     description:
       "Transform raw data into actionable insights using advanced analytics and machine learning techniques.",
     icon: "📊",
-  },
-  {
-    title: "AI System Optimization",
-    description:
-      "Improve performance, accuracy, and efficiency of your existing AI systems through expert optimization.",
-    icon: "🚀",
+    category: "ai",
   },
 ];
 
@@ -50,7 +70,7 @@ export function ServicesOverview() {
             Our Services
           </h2>
           <p className="text-lg text-foreground/60">
-            End-to-end AI solutions to help you innovate and compete in the modern market
+            End-to-end AI and web development solutions to help you innovate and compete in the modern market
           </p>
         </div>
 

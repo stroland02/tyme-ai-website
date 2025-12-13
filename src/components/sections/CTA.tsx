@@ -12,8 +12,8 @@ export function CTA() {
               Ready to Transform Your Business?
             </h2>
             <p className="mb-8 text-lg text-white/90 md:text-xl">
-              Let's discuss how AI can help you achieve your goals. Get a free
-              consultation and project quote today.
+              Let's discuss how AI and modern web solutions can help you achieve your goals.
+              Get a free consultation and project quote today.
             </p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
               <Button

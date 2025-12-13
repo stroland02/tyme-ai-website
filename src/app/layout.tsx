@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tyme AI - AI/ML Solutions for Modern Businesses",
-  description: "Custom AI/ML development, automation, and integration services to help you scale faster and smarter.",
+  title: "Tyme AI - AI/ML & Web Development Solutions for Modern Businesses",
+  description: "Custom AI/ML development, modern web applications, e-commerce solutions, automation, and integration services to help you scale faster and smarter.",
 };
 
 export default function RootLayout({
