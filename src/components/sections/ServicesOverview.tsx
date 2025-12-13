@@ -94,21 +94,36 @@ export function ServicesOverview() {
         },
       });
 
-      // Horizontal scroll animation
+      // Horizontal scroll animation with centered cards
       const cards = gsap.utils.toArray(".horizontal-card");
       const scrollContainer = scrollContainerRef.current;
       const cardsWrapper = cardsWrapperRef.current;
 
       if (scrollContainer && cardsWrapper && cards.length > 0) {
-        const scrollWidth = cardsWrapper.scrollWidth - scrollContainer.offsetWidth;
+        // Calculate the distance needed to scroll
+        // We want to center cards, so we need extra space on both sides
+        const cardWidth = 380; // Card width from the component
+        const gap = 24; // 6 unit gap (6 * 4px = 24px)
+        const viewportWidth = window.innerWidth;
+
+        // Calculate starting position to center first card
+        const startOffset = (viewportWidth - cardWidth) / 2;
+
+        // Set initial position to center first card
+        gsap.set(cardsWrapper, { x: startOffset });
+
+        // Calculate total scroll distance
+        // Each card should end up centered, so we scroll card width + gap for each transition
+        const totalCards = cards.length + 1; // +1 for the CTA card
+        const scrollWidth = (cardWidth + gap) * (totalCards - 1);
 
         gsap.to(cardsWrapper, {
-          x: -scrollWidth,
+          x: -(scrollWidth - startOffset),
           ease: "none",
           scrollTrigger: {
             trigger: scrollContainer,
             start: "top top",
-            end: () => `+=${scrollWidth}`,
+            end: () => `+=${scrollWidth * 2}`, // Longer scroll for smoother experience
             scrub: 1,
             pin: true,
             anticipatePin: 1,
@@ -116,7 +131,7 @@ export function ServicesOverview() {
           },
         });
 
-        // Animate cards on reveal
+        // Animate cards on reveal with scale effect based on position
         cards.forEach((card, index) => {
           gsap.from(card as HTMLElement, {
             opacity: 0,
@@ -197,7 +212,7 @@ export function ServicesOverview() {
       <div ref={scrollContainerRef} className="relative overflow-hidden">
         <div
           ref={cardsWrapperRef}
-          className="flex gap-6 px-4 sm:px-6 lg:px-8"
+          className="flex gap-6"
           style={{ width: "max-content" }}
         >
           {services.map((service, index) => (
