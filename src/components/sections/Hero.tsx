@@ -136,13 +136,13 @@ export function Hero() {
           {/* Main Headline */}
           <h1
             ref={headlineRef}
-            className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
+            className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl leading-tight"
           >
-            Transform Your Business with{" "}
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="block">Transform Your Business with</span>
+            <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               AI-Powered & Modern Web
-            </span>{" "}
-            Solutions
+            </span>
+            <span className="block">Solutions</span>
           </h1>
 
           {/* Subheadline */}
