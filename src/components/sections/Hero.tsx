@@ -128,9 +128,7 @@ export function Hero() {
             ref={badgeRef}
             className="mb-6 inline-flex items-center rounded-full border border-foreground/20 px-4 py-1.5 text-sm"
           >
-            <span className="text-foreground/60">
-              AI & Web Development Solutions
-            </span>
+            <span className="text-foreground/60">Tyme AI</span>
           </div>
 
           {/* Main Headline */}
@@ -138,7 +136,6 @@ export function Hero() {
             ref={headlineRef}
             className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl leading-tight"
           >
-            <span className="block">Transform Your Business With</span>
             <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               AI-Powered & Modern Web
             </span>
@@ -148,7 +145,7 @@ export function Hero() {
           {/* Subheadline */}
           <p
             ref={subheadlineRef}
-            className="mb-10 text-lg text-foreground/60 sm:text-xl md:text-2xl"
+            className="mb-10 text-base text-foreground/60 sm:text-lg md:text-xl"
           >
             Custom AI/ML development, modern web applications, e-commerce
             solutions, and automation services to help you scale faster and
