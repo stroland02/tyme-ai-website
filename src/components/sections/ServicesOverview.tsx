@@ -122,10 +122,11 @@ export function ServicesOverview() {
           ease: "none",
           scrollTrigger: {
             trigger: scrollContainer,
-            start: "top top",
+            start: "top 10%", // Start pinning when section is near top but not cut off
             end: () => `+=${scrollWidth * 2}`, // Longer scroll for smoother experience
             scrub: 1,
             pin: true,
+            pinSpacing: true,
             anticipatePin: 1,
             invalidateOnRefresh: true,
           },
@@ -196,20 +197,22 @@ export function ServicesOverview() {
 
   return (
     <section ref={sectionRef} className="py-20 md:py-32 overflow-hidden">
-      {/* Section Header */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-        <div ref={headerRef} className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl mb-4">
-            Our Services
-          </h2>
-          <p className="text-lg text-foreground/60">
-            Scroll to explore our end-to-end AI and web development solutions
-          </p>
+      {/* Pinnable Container - includes header and cards */}
+      <div ref={scrollContainerRef} className="relative">
+        {/* Section Header */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+          <div ref={headerRef} className="mx-auto max-w-3xl text-center">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl mb-4">
+              Our Services
+            </h2>
+            <p className="text-lg text-foreground/60">
+              Scroll to explore our end-to-end AI and web development solutions
+            </p>
+          </div>
         </div>
-      </div>
 
-      {/* Horizontal Scrolling Container */}
-      <div ref={scrollContainerRef} className="relative overflow-hidden">
+        {/* Horizontal Scrolling Cards */}
+        <div className="relative overflow-hidden flex items-center" style={{ minHeight: '600px' }}>
         <div
           ref={cardsWrapperRef}
           className="flex gap-6"
@@ -218,7 +221,7 @@ export function ServicesOverview() {
           {services.map((service, index) => (
             <div
               key={service.title}
-              className="horizontal-card group relative flex-shrink-0 w-[380px] h-[480px] rounded-3xl border border-foreground/10 bg-background p-8 transition-all hover:border-foreground/20 hover:shadow-2xl cursor-pointer overflow-hidden"
+              className="horizontal-card group relative flex-shrink-0 w-[380px] h-[480px] rounded-3xl border border-foreground/10 bg-background p-8 transition-all hover:border-foreground/20 hover:shadow-2xl cursor-pointer overflow-hidden my-auto"
             >
               {/* Gradient Background */}
               <div
@@ -260,7 +263,7 @@ export function ServicesOverview() {
           ))}
 
           {/* End CTA Card */}
-          <div className="flex-shrink-0 w-[380px] h-[480px] rounded-3xl border-2 border-dashed border-foreground/20 bg-foreground/[0.02] p-8 flex items-center justify-center">
+          <div className="flex-shrink-0 w-[380px] h-[480px] rounded-3xl border-2 border-dashed border-foreground/20 bg-foreground/[0.02] p-8 flex items-center justify-center my-auto">
             <div className="text-center">
               <h3 className="text-2xl font-bold mb-4">Want to see more?</h3>
               <p className="text-foreground/60 mb-6">
@@ -275,14 +278,15 @@ export function ServicesOverview() {
             </div>
           </div>
         </div>
-      </div>
+        </div>
 
-      {/* Scroll Hint */}
-      <div className="mt-12 text-center">
-        <p className="text-sm text-foreground/40 flex items-center justify-center gap-2">
-          <span>Scroll horizontally</span>
-          <span className="inline-block animate-pulse">→</span>
-        </p>
+        {/* Scroll Hint */}
+        <div className="mt-12 text-center">
+          <p className="text-sm text-foreground/40 flex items-center justify-center gap-2">
+            <span>Scroll horizontally</span>
+            <span className="inline-block animate-pulse">→</span>
+          </p>
+        </div>
       </div>
     </section>
   );
