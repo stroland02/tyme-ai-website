@@ -130,9 +130,10 @@ export function Hero() {
           {/* Subheadline */}
           <p
             ref={subheadlineRef}
-            className="mb-12 ml-4 md:ml-8 max-w-2xl text-base text-foreground-muted sm:text-lg md:text-xl font-light"
+            className="mb-12 ml-4 md:ml-8 max-w-2xl text-base sm:text-lg md:text-xl font-mono"
           >
-            We build custom automation software and modern web solutions for businesses ready to scale.
+            <span className="text-foreground-ghost">// </span>
+            <span className="text-foreground-muted font-light">Time is money. We automate workflows so you can focus on growth.</span>
           </p>
 
           {/* CTA Buttons - Code style */}
