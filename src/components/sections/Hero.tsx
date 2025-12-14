@@ -96,17 +96,6 @@ export function Hero() {
       <div className="absolute inset-0 z-0">
         <AnimatedGrid />
         <ParticleBackground />
-
-        {/* Watermark Logo */}
-        <div className="absolute top-0 left-0 right-0 h-96 flex items-start justify-center pt-2 z-10 group cursor-pointer">
-          <Image
-            src="/logo.png"
-            alt="Tyme AI Watermark"
-            width={500}
-            height={500}
-            className="object-contain opacity-0 group-hover:opacity-80 transition-opacity duration-500 ease-in-out"
-          />
-        </div>
       </div>
 
       {/* Gradient Overlay */}
@@ -117,6 +106,17 @@ export function Hero() {
           {/* Code-style label */}
           <div ref={badgeRef} className="mb-6 md:mb-8">
             <CodeLabel index="01">AI & Web Development</CodeLabel>
+          </div>
+
+          {/* Logo */}
+          <div className="mb-8 md:mb-12 flex justify-start">
+            <Image
+              src="/logo.png"
+              alt="Tyme AI Logo"
+              width={400}
+              height={400}
+              className="object-contain w-full max-w-md opacity-90 hover:opacity-100 transition-opacity duration-300"
+            />
           </div>
 
           {/* Main Headline - Code aesthetic */}
