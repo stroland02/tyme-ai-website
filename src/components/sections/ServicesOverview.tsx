@@ -215,7 +215,7 @@ export function ServicesOverview() {
         </div>
 
         {/* Horizontal Scrolling Cards */}
-        <div className="relative overflow-x-auto overflow-y-hidden flex items-center scrollbar-hide" style={{ minHeight: '420px' }}>
+        <div className="relative overflow-x-auto overflow-y-visible flex items-center scrollbar-hide py-8" style={{ minHeight: '420px' }}>
         <div
           ref={cardsWrapperRef}
           className="flex gap-4 md:gap-6 px-4 md:px-0 mx-auto"
