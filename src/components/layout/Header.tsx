@@ -9,6 +9,11 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-xl">
       <Container>
         <div className="flex h-16 items-center justify-between gap-4">
+          {/* Logo Text Only (no image) */}
+          <Link href="/" className="hover:opacity-80 transition-opacity flex-shrink-0">
+            <Logo showText={true} showImage={false} animateGradient={true} />
+          </Link>
+
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
             <Link

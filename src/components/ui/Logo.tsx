@@ -4,22 +4,25 @@ interface LogoProps {
   className?: string;
   size?: number;
   showText?: boolean;
+  showImage?: boolean;
   animateGradient?: boolean;
 }
 
-export function Logo({ className = "", size = 40, showText = true, animateGradient = false }: LogoProps) {
+export function Logo({ className = "", size = 40, showText = true, showImage = true, animateGradient = false }: LogoProps) {
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       {/* Futuristic Spaceship Logo */}
-      <Image
-        src="/logo.png"
-        alt="Tyme AI Logo"
-        width={size}
-        height={size}
-        className="flex-shrink-0"
-        style={{ mixBlendMode: 'lighten' }}
-        priority
-      />
+      {showImage && (
+        <Image
+          src="/logo.png"
+          alt="Tyme AI Logo"
+          width={size}
+          height={size}
+          className="flex-shrink-0"
+          style={{ mixBlendMode: 'lighten' }}
+          priority
+        />
+      )}
 
       {/* Text logo without brackets */}
       {showText && (
