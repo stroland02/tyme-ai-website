@@ -1,131 +1,99 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { CodeCTA } from "../ui/CodeCTA";
+import { Logo } from "../ui/Logo";
 
 export function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Prevent body scroll when menu is open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isOpen]);
-
   return (
-    <>
-      {/* Hamburger Button - More visible */}
+    <div className="relative md:hidden">
+      {/* Hamburger Button */}
       <button
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          console.log('Menu button clicked, isOpen:', !isOpen);
+        onClick={() => {
+          console.log('Toggle clicked, current state:', isOpen);
           setIsOpen(!isOpen);
         }}
-        className="md:hidden flex flex-col justify-center items-center gap-1.5 p-3 rounded-lg border-2 border-foreground-ghost hover:border-foreground hover:bg-foreground-dim transition-all active:scale-95"
+        className="flex flex-col justify-center items-center gap-1.5 p-2.5 rounded-lg border border-foreground-ghost hover:border-foreground hover:bg-foreground-dim transition-all active:scale-95 bg-background"
         aria-label="Toggle menu"
+        aria-expanded={isOpen}
         type="button"
       >
         <span
-          className={`block h-0.5 w-6 bg-foreground transition-all duration-300 ${
+          className={`block h-0.5 w-5 bg-foreground transition-all duration-300 ${
             isOpen ? "rotate-45 translate-y-2" : ""
           }`}
         />
         <span
-          className={`block h-0.5 w-6 bg-foreground transition-all duration-300 ${
+          className={`block h-0.5 w-5 bg-foreground transition-all duration-300 ${
             isOpen ? "opacity-0" : ""
           }`}
         />
         <span
-          className={`block h-0.5 w-6 bg-foreground transition-all duration-300 ${
+          className={`block h-0.5 w-5 bg-foreground transition-all duration-300 ${
             isOpen ? "-rotate-45 -translate-y-2" : ""
           }`}
         />
       </button>
 
-      {/* Mobile Menu Overlay */}
+      {/* Dropdown Menu */}
       {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/95 backdrop-blur-xl md:hidden overflow-y-auto"
-          style={{ zIndex: 9999 }}
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setIsOpen(false);
-            }
-          }}
-        >
+        <>
+          {/* Backdrop - close menu when clicking outside */}
           <div
-            className="min-h-screen flex flex-col items-center justify-center py-20 px-6"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close button */}
-            <button
-              onClick={() => setIsOpen(false)}
-              className="absolute top-6 right-6 text-foreground hover:text-foreground-muted transition-colors"
-              aria-label="Close menu"
-            >
-              <span className="text-3xl font-light">×</span>
-            </button>
+            className="fixed inset-0 z-[60]"
+            onClick={() => setIsOpen(false)}
+            aria-hidden="true"
+          />
 
-            <div className="flex flex-col items-center gap-8 w-full max-w-sm">
-              {/* Logo */}
+          {/* Dropdown Content - positioned fixed to break out of header constraints */}
+          <div className="fixed right-4 top-[4.5rem] w-[calc(100vw-2rem)] max-w-xs rounded-lg border border-border bg-background shadow-2xl z-[70]">
+            {/* Navigation Links */}
+            <nav className="flex flex-col py-2">
               <Link
-                href="/"
-                className="font-mono text-2xl font-bold"
+                href="/services"
+                className="px-4 py-3 font-mono text-sm text-foreground-subtle hover:text-foreground hover:bg-foreground-dim transition-colors border-b border-border"
                 onClick={() => setIsOpen(false)}
               >
-                <span className="text-foreground-subtle">&lt;</span>
-                Tyme AI
-                <span className="text-foreground-subtle">/&gt;</span>
+                services
+              </Link>
+              <Link
+                href="/portfolio"
+                className="px-4 py-3 font-mono text-sm text-foreground-subtle hover:text-foreground hover:bg-foreground-dim transition-colors border-b border-border"
+                onClick={() => setIsOpen(false)}
+              >
+                portfolio
+              </Link>
+              <Link
+                href="/about"
+                className="px-4 py-3 font-mono text-sm text-foreground-subtle hover:text-foreground hover:bg-foreground-dim transition-colors border-b border-border"
+                onClick={() => setIsOpen(false)}
+              >
+                about
+              </Link>
+              <Link
+                href="/blog"
+                className="px-4 py-3 font-mono text-sm text-foreground-subtle hover:text-foreground hover:bg-foreground-dim transition-colors border-b border-border"
+                onClick={() => setIsOpen(false)}
+              >
+                blog
               </Link>
 
-              {/* Navigation Links */}
-              <nav className="flex flex-col items-center gap-6 w-full">
-                <Link
-                  href="/services"
-                  className="text-xl font-mono text-foreground-subtle hover:text-foreground transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  services
-                </Link>
-                <Link
-                  href="/portfolio"
-                  className="text-xl font-mono text-foreground-subtle hover:text-foreground transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  portfolio
-                </Link>
-                <Link
-                  href="/about"
-                  className="text-xl font-mono text-foreground-subtle hover:text-foreground transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  about
-                </Link>
-                <Link
-                  href="/blog"
-                  className="text-xl font-mono text-foreground-subtle hover:text-foreground transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  blog
-                </Link>
-              </nav>
-
               {/* CTA Button */}
-              <div className="mt-4 w-full flex justify-center" onClick={() => setIsOpen(false)}>
-                <CodeCTA functionName="contact" href="/contact" size="lg" />
+              <div className="px-4 py-3">
+                <CodeCTA
+                  functionName="contact"
+                  href="/contact"
+                  size="sm"
+                  className="w-full justify-center"
+                />
               </div>
-            </div>
+            </nav>
           </div>
-        </div>
+        </>
       )}
-    </>
+    </div>
   );
 }

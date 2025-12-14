@@ -2,17 +2,16 @@ import Link from "next/link";
 import { Container } from "./Container";
 import { CodeCTA } from "../ui/CodeCTA";
 import { MobileMenu } from "./MobileMenu";
+import { Logo } from "../ui/Logo";
 
 export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-xl">
       <Container>
         <div className="flex h-16 items-center justify-between gap-4">
-          {/* Logo - Code style */}
-          <Link href="/" className="font-mono text-sm sm:text-base md:text-lg font-bold hover:text-foreground-muted transition-colors flex-shrink-0">
-            <span className="text-foreground-subtle">&lt;</span>
-            Tyme AI
-            <span className="text-foreground-subtle">/&gt;</span>
+          {/* Logo with Spaceship */}
+          <Link href="/" className="hover:opacity-80 transition-opacity flex-shrink-0">
+            <Logo size={32} showText={true} />
           </Link>
 
           {/* Desktop Navigation */}

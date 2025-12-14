@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Container } from "./Container";
+import { Logo } from "../ui/Logo";
 
 export function Footer() {
   return (
@@ -9,11 +10,7 @@ export function Footer() {
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4">
             {/* Company Info */}
             <div className="space-y-4">
-              <h3 className="text-lg font-bold font-mono">
-                <span className="text-foreground-subtle">&lt;</span>
-                Tyme AI
-                <span className="text-foreground-subtle">/&gt;</span>
-              </h3>
+              <Logo size={36} showText={true} />
               <p className="text-sm text-foreground-muted">
                 AI & Web solutions for modern businesses
               </p>
