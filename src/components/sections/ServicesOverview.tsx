@@ -224,7 +224,7 @@ export function ServicesOverview() {
           {services.map((service, index) => (
             <div
               key={service.title}
-              className="horizontal-card group relative flex-shrink-0 w-[380px] h-[480px] rounded-xl border border-border bg-background p-8 transition-all hover:border-foreground-ghost hover:shadow-2xl hover:shadow-primary/10 cursor-pointer overflow-hidden my-auto"
+              className="horizontal-card group relative flex-shrink-0 w-[280px] sm:w-[320px] md:w-[360px] lg:w-[380px] h-[420px] sm:h-[450px] md:h-[480px] rounded-xl border border-border bg-background p-6 sm:p-8 transition-all hover:border-foreground-ghost hover:shadow-2xl hover:shadow-primary/10 cursor-pointer overflow-hidden my-auto"
             >
               {/* Gradient Background */}
               <div
@@ -241,13 +241,13 @@ export function ServicesOverview() {
                 </div>
 
                 {/* Icon */}
-                <div className="service-icon mb-6 text-5xl opacity-80">{service.icon}</div>
+                <div className="service-icon mb-4 sm:mb-6 text-4xl sm:text-5xl opacity-80">{service.icon}</div>
 
                 {/* Title */}
-                <h3 className="mb-4 text-xl font-bold tracking-tight">{service.title}</h3>
+                <h3 className="mb-3 sm:mb-4 text-lg sm:text-xl font-bold tracking-tight">{service.title}</h3>
 
                 {/* Description */}
-                <p className="text-foreground-muted text-sm leading-relaxed flex-grow">{service.description}</p>
+                <p className="text-foreground-muted text-xs sm:text-sm leading-relaxed flex-grow">{service.description}</p>
 
                 {/* Arrow - code style */}
                 <div className="mt-6 flex items-center text-sm font-mono text-foreground-subtle group-hover:text-foreground group-hover:gap-2 transition-all">
@@ -261,13 +261,13 @@ export function ServicesOverview() {
           ))}
 
           {/* End CTA Card */}
-          <div className="flex-shrink-0 w-[380px] h-[480px] rounded-xl border border-dashed border-border bg-foreground-dim/50 p-8 flex items-center justify-center my-auto">
+          <div className="flex-shrink-0 w-[280px] sm:w-[320px] md:w-[360px] lg:w-[380px] h-[420px] sm:h-[450px] md:h-[480px] rounded-xl border border-dashed border-border bg-foreground-dim/50 p-6 sm:p-8 flex items-center justify-center my-auto">
             <div className="text-center">
-              <div className="font-mono text-sm text-foreground-ghost mb-4">
+              <div className="font-mono text-xs sm:text-sm text-foreground-ghost mb-3 sm:mb-4">
                 export &#123;
               </div>
-              <h3 className="text-2xl font-bold mb-4">Ready to build?</h3>
-              <p className="text-foreground-muted mb-8 text-sm">
+              <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Ready to build?</h3>
+              <p className="text-foreground-muted mb-6 sm:mb-8 text-xs sm:text-sm">
                 Explore our portfolio and start your project
               </p>
               <CodeCTA functionName="viewAll" href="/services" variant="primary" />
