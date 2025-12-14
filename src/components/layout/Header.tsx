@@ -3,6 +3,7 @@ import { Container } from "./Container";
 import { CodeCTA } from "../ui/CodeCTA";
 import { MobileMenu } from "./MobileMenu";
 import { Logo } from "../ui/Logo";
+import { ThemeToggle } from "../ui/ThemeToggle";
 
 export function Header() {
   return (
@@ -42,8 +43,9 @@ export function Header() {
             </Link>
           </nav>
 
-          {/* Desktop CTA Button */}
+          {/* Desktop CTA Button & Theme Toggle */}
           <div className="hidden md:flex items-center gap-4">
+            <ThemeToggle />
             <CodeCTA functionName="contact" href="/contact" size="sm" />
           </div>
 

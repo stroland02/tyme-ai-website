@@ -198,7 +198,7 @@ export function ServicesOverview() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 md:py-32 overflow-hidden">
+    <section ref={sectionRef} className="py-20 md:py-32 overflow-visible">
       {/* Pinnable Container - includes header and cards */}
       <div ref={scrollContainerRef} className="relative">
         {/* Section Header */}

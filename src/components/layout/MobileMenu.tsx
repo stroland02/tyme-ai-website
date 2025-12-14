@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { CodeCTA } from "../ui/CodeCTA";
 import { Logo } from "../ui/Logo";
+import { ThemeToggle } from "../ui/ThemeToggle";
 
 export function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
@@ -80,6 +81,11 @@ export function MobileMenu() {
               >
                 blog
               </Link>
+
+              {/* Theme Toggle */}
+              <div className="px-4 py-3 border-b border-border">
+                <ThemeToggle />
+              </div>
 
               {/* CTA Button */}
               <div className="px-4 py-3">
