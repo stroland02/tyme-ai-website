@@ -11,6 +11,7 @@ export function Footer() {
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4">
             {/* Company Info */}
             <div className="space-y-4">
+              <Logo size={72} showText={true} />
               <p className="text-sm text-foreground-muted">
                 AI & Web solutions for modern businesses
               </p>
