@@ -4,7 +4,8 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Container } from "../layout/Container";
-import { Button } from "../ui/Button";
+import { CodeCTA } from "../ui/CodeCTA";
+import { CodeLabel } from "../ui/CodeLabel";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -72,46 +73,43 @@ export function CTA() {
       <Container>
         <div
           ref={cardRef}
-          className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-16 md:px-16 md:py-24"
+          className="relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-blue-600/10 to-purple-600/10 px-8 py-16 md:px-16 md:py-24"
         >
           <div
             ref={contentRef}
-            className="relative z-10 mx-auto max-w-3xl text-center"
+            className="relative z-10 mx-auto max-w-3xl"
           >
-            <h2 className="mb-6 text-3xl font-bold text-white sm:text-4xl md:text-5xl">
-              Ready to Transform Your Business?
+            <CodeLabel index="03" className="mb-6">ready.to.start()</CodeLabel>
+            <h2 className="mb-6 text-3xl font-bold sm:text-4xl md:text-5xl">
+              Let's build something great.
             </h2>
-            <p className="mb-8 text-lg text-white/90 md:text-xl">
-              Let's discuss how AI and modern web solutions can help you achieve
-              your goals. Get a free consultation and project quote today.
+            <p className="mb-8 text-lg text-foreground-muted md:text-xl font-light">
+              Free consultation. Custom solutions. Real results.
             </p>
-            <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-              <Button
+            <div className="flex flex-col gap-4 sm:flex-row">
+              <CodeCTA
+                functionName="startProject"
                 href="/contact"
                 size="lg"
-                className="bg-white text-black hover:bg-white/90 hover:scale-105 transition-transform"
-              >
-                Get Free Consultation
-              </Button>
-              <Button
+                variant="primary"
+              />
+              <CodeCTA
+                functionName="viewPortfolio"
                 href="/portfolio"
-                variant="outline"
                 size="lg"
-                className="border-white text-white hover:bg-white/10 hover:scale-105 transition-transform"
-              >
-                See Case Studies
-              </Button>
+                variant="secondary"
+              />
             </div>
           </div>
 
-          {/* Decorative Elements */}
+          {/* Decorative gradient orbs */}
           <div
             ref={orb1Ref}
-            className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-white/10 blur-3xl pointer-events-none"
+            className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-blue-500/20 blur-3xl pointer-events-none"
           />
           <div
             ref={orb2Ref}
-            className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-white/10 blur-3xl pointer-events-none"
+            className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-purple-500/20 blur-3xl pointer-events-none"
           />
         </div>
       </Container>

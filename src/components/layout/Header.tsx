@@ -1,50 +1,50 @@
 import Link from "next/link";
 import { Container } from "./Container";
-import { Button } from "../ui/Button";
+import { CodeCTA } from "../ui/CodeCTA";
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-foreground/10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-xl">
       <Container>
         <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="text-xl font-bold">
+          {/* Logo - Code style */}
+          <Link href="/" className="font-mono text-lg font-bold hover:text-foreground-muted transition-colors">
+            <span className="text-foreground-subtle">&lt;</span>
             Tyme AI
+            <span className="text-foreground-subtle">/&gt;</span>
           </Link>
 
           {/* Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-8">
             <Link
               href="/services"
-              className="text-sm font-medium transition-colors hover:text-foreground/80"
+              className="text-sm font-mono text-foreground-subtle hover:text-foreground transition-colors"
             >
-              Services
+              services
             </Link>
             <Link
               href="/portfolio"
-              className="text-sm font-medium transition-colors hover:text-foreground/80"
+              className="text-sm font-mono text-foreground-subtle hover:text-foreground transition-colors"
             >
-              Portfolio
+              portfolio
             </Link>
             <Link
               href="/about"
-              className="text-sm font-medium transition-colors hover:text-foreground/80"
+              className="text-sm font-mono text-foreground-subtle hover:text-foreground transition-colors"
             >
-              About
+              about
             </Link>
             <Link
               href="/blog"
-              className="text-sm font-medium transition-colors hover:text-foreground/80"
+              className="text-sm font-mono text-foreground-subtle hover:text-foreground transition-colors"
             >
-              Blog
+              blog
             </Link>
           </nav>
 
           {/* CTA Button */}
           <div className="flex items-center gap-4">
-            <Button href="/contact" size="sm">
-              Get Quote
-            </Button>
+            <CodeCTA functionName="contact" href="/contact" size="sm" />
           </div>
         </div>
       </Container>

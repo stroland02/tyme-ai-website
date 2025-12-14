@@ -3,40 +3,44 @@ import { Container } from "./Container";
 
 export function Footer() {
   return (
-    <footer className="border-t border-foreground/10 bg-background">
+    <footer className="border-t border-border bg-background">
       <Container>
         <div className="py-12 md:py-16">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
             {/* Company Info */}
             <div className="space-y-4">
-              <h3 className="text-lg font-bold">Tyme AI</h3>
-              <p className="text-sm text-foreground/60">
-                AI/ML & Web Development solutions for modern businesses
+              <h3 className="text-lg font-bold font-mono">
+                <span className="text-foreground-subtle">&lt;</span>
+                Tyme AI
+                <span className="text-foreground-subtle">/&gt;</span>
+              </h3>
+              <p className="text-sm text-foreground-muted">
+                AI & Web solutions for modern businesses
               </p>
             </div>
 
             {/* Services */}
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold">Services</h4>
-              <ul className="space-y-2 text-sm text-foreground/60">
+              <h4 className="text-sm font-semibold font-mono text-foreground-subtle">// Services</h4>
+              <ul className="space-y-2 text-sm text-foreground-muted font-mono">
                 <li>
-                  <Link href="/services" className="hover:text-foreground">
-                    Web Development
+                  <Link href="/services" className="hover:text-foreground transition-colors">
+                    webDev
                   </Link>
                 </li>
                 <li>
-                  <Link href="/services" className="hover:text-foreground">
-                    E-commerce Solutions
+                  <Link href="/services" className="hover:text-foreground transition-colors">
+                    ecommerce
                   </Link>
                 </li>
                 <li>
-                  <Link href="/services" className="hover:text-foreground">
-                    AI/ML Development
+                  <Link href="/services" className="hover:text-foreground transition-colors">
+                    aiMl
                   </Link>
                 </li>
                 <li>
-                  <Link href="/services" className="hover:text-foreground">
-                    Automation
+                  <Link href="/services" className="hover:text-foreground transition-colors">
+                    automation
                   </Link>
                 </li>
               </ul>
@@ -44,26 +48,26 @@ export function Footer() {
 
             {/* Company */}
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold">Company</h4>
-              <ul className="space-y-2 text-sm text-foreground/60">
+              <h4 className="text-sm font-semibold font-mono text-foreground-subtle">// Company</h4>
+              <ul className="space-y-2 text-sm text-foreground-muted font-mono">
                 <li>
-                  <Link href="/about" className="hover:text-foreground">
-                    About
+                  <Link href="/about" className="hover:text-foreground transition-colors">
+                    about
                   </Link>
                 </li>
                 <li>
-                  <Link href="/portfolio" className="hover:text-foreground">
-                    Portfolio
+                  <Link href="/portfolio" className="hover:text-foreground transition-colors">
+                    portfolio
                   </Link>
                 </li>
                 <li>
-                  <Link href="/blog" className="hover:text-foreground">
-                    Blog
+                  <Link href="/blog" className="hover:text-foreground transition-colors">
+                    blog
                   </Link>
                 </li>
                 <li>
-                  <Link href="/contact" className="hover:text-foreground">
-                    Contact
+                  <Link href="/contact" className="hover:text-foreground transition-colors">
+                    contact
                   </Link>
                 </li>
               </ul>
@@ -71,16 +75,16 @@ export function Footer() {
 
             {/* Legal */}
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold">Legal</h4>
-              <ul className="space-y-2 text-sm text-foreground/60">
+              <h4 className="text-sm font-semibold font-mono text-foreground-subtle">// Legal</h4>
+              <ul className="space-y-2 text-sm text-foreground-muted font-mono">
                 <li>
-                  <Link href="/privacy" className="hover:text-foreground">
-                    Privacy Policy
+                  <Link href="/privacy" className="hover:text-foreground transition-colors">
+                    privacy.md
                   </Link>
                 </li>
                 <li>
-                  <Link href="/terms" className="hover:text-foreground">
-                    Terms of Service
+                  <Link href="/terms" className="hover:text-foreground transition-colors">
+                    terms.md
                   </Link>
                 </li>
               </ul>
@@ -88,9 +92,15 @@ export function Footer() {
           </div>
 
           {/* Bottom Bar */}
-          <div className="mt-12 border-t border-foreground/10 pt-8 text-center text-sm text-foreground/60">
-            <p className="mb-2">&copy; {new Date().getFullYear()} Tyme AI. All rights reserved.</p>
-            <p className="text-xs">Owned by Sebastian Roland</p>
+          <div className="mt-12 border-t border-border-subtle pt-8 text-sm text-foreground-ghost">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-2">
+              <p className="font-mono text-xs">
+                © {new Date().getFullYear()} Tyme AI. All rights reserved.
+              </p>
+              <p className="font-mono text-xs">
+                built by Sebastian Roland
+              </p>
+            </div>
           </div>
         </div>
       </Container>

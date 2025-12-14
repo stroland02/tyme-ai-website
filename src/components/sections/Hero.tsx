@@ -4,7 +4,9 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Container } from "../layout/Container";
-import { Button } from "../ui/Button";
+import { CodeCTA } from "../ui/CodeCTA";
+import { CodeLabel } from "../ui/CodeLabel";
+import { SyntaxHighlight } from "../ui/SyntaxHighlight";
 import { AnimatedGrid } from "../ui/AnimatedGrid";
 import { ParticleBackground } from "../ui/ParticleBackground";
 
@@ -122,63 +124,74 @@ export function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background z-0" />
 
       <Container>
-        <div className="relative z-10 mx-auto max-w-4xl text-center">
-          {/* Badge/Label */}
-          <div
-            ref={badgeRef}
-            className="mb-6 inline-flex items-center rounded-full border border-foreground/20 px-4 py-1.5 text-sm"
-          >
-            <span className="text-foreground/60">Tyme AI</span>
+        <div className="relative z-10 mx-auto max-w-5xl">
+          {/* Code-style label */}
+          <div ref={badgeRef} className="mb-8">
+            <CodeLabel index="01">AI & Web Development</CodeLabel>
           </div>
 
-          {/* Main Headline */}
-          <h1
-            ref={headlineRef}
-            className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl leading-tight"
-          >
-            <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              AI-Powered & Modern Web
-            </span>
-            <span className="block">Solutions</span>
-          </h1>
+          {/* Main Headline - Code aesthetic */}
+          <div className="mb-8 space-y-4">
+            <div ref={headlineRef}>
+              <SyntaxHighlight type="const" className="mb-4 text-base md:text-lg">
+                mission = &#123;
+              </SyntaxHighlight>
+              <h1 className="ml-4 md:ml-8 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight">
+                <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent glow-text">
+                  AI that works.
+                </span>
+                <span className="block bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent glow-text">
+                  Web that scales.
+                </span>
+              </h1>
+              <SyntaxHighlight type="const" className="mt-4 text-base md:text-lg">
+                &#125;
+              </SyntaxHighlight>
+            </div>
+          </div>
 
           {/* Subheadline */}
           <p
             ref={subheadlineRef}
-            className="mb-10 text-base text-foreground/60 sm:text-lg md:text-xl"
+            className="mb-12 ml-4 md:ml-8 max-w-2xl text-base text-foreground-muted sm:text-lg md:text-xl font-light"
           >
-            Custom AI/ML development, modern web applications, e-commerce
-            solutions, and automation services to help you scale faster and
-            smarter.
+            We build custom AI and modern web solutions for businesses ready to scale.
           </p>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons - Code style */}
           <div
             ref={ctaRef}
-            className="flex flex-col gap-4 sm:flex-row sm:justify-center"
+            className="flex flex-col gap-4 sm:flex-row sm:items-center ml-4 md:ml-8"
           >
-            <div className="cta-button">
-              <Button href="/contact" size="lg">
-                Get Started
-              </Button>
-            </div>
-            <div className="cta-button">
-              <Button href="/portfolio" variant="outline" size="lg">
-                View Our Work
-              </Button>
-            </div>
+            <CodeCTA functionName="getStarted" href="/contact" size="lg" />
+            <CodeCTA
+              functionName="viewWork"
+              href="/portfolio"
+              variant="secondary"
+              size="lg"
+            />
           </div>
 
-          {/* Social Proof */}
-          <div ref={socialProofRef} className="mt-16 text-sm text-foreground/60">
-            <p className="mb-4">Trusted by innovative companies</p>
-            <div className="flex flex-wrap items-center justify-center gap-8">
-              {/* Placeholder for client logos */}
-              {[1, 2, 3, 4].map((i) => (
-                <div
-                  key={i}
-                  className="logo-placeholder h-8 w-24 rounded bg-foreground/5 hover:bg-foreground/10 transition-colors cursor-pointer"
-                />
+          {/* Stats - Developer metrics style */}
+          <div
+            ref={socialProofRef}
+            className="mt-20 pt-12 border-t border-border-subtle"
+          >
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              {[
+                { label: "Projects", value: "50+" },
+                { label: "Clients", value: "30+" },
+                { label: "Success Rate", value: "98%" },
+                { label: "Years Active", value: "5+" },
+              ].map((stat, i) => (
+                <div key={i} className="logo-placeholder">
+                  <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+                    {stat.value}
+                  </div>
+                  <div className="text-sm text-foreground-subtle font-mono uppercase tracking-wider">
+                    {stat.label}
+                  </div>
+                </div>
               ))}
             </div>
           </div>

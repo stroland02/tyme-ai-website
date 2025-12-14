@@ -4,6 +4,8 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { CodeLabel } from "../ui/CodeLabel";
+import { CodeCTA } from "../ui/CodeCTA";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -201,12 +203,13 @@ export function ServicesOverview() {
       <div ref={scrollContainerRef} className="relative">
         {/* Section Header */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-          <div ref={headerRef} className="mx-auto max-w-3xl text-center">
+          <div ref={headerRef} className="mx-auto max-w-3xl">
+            <CodeLabel index="02" className="mb-6">services.map()</CodeLabel>
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl mb-4">
-              Our Services
+              What We Build
             </h2>
-            <p className="text-lg text-foreground/60">
-              Scroll to explore our end-to-end AI and web development solutions
+            <p className="text-lg text-foreground-muted font-mono">
+              <span className="text-foreground-ghost">// </span>Scroll to explore →
             </p>
           </div>
         </div>
@@ -221,60 +224,56 @@ export function ServicesOverview() {
           {services.map((service, index) => (
             <div
               key={service.title}
-              className="horizontal-card group relative flex-shrink-0 w-[380px] h-[480px] rounded-3xl border border-foreground/10 bg-background p-8 transition-all hover:border-foreground/20 hover:shadow-2xl cursor-pointer overflow-hidden my-auto"
+              className="horizontal-card group relative flex-shrink-0 w-[380px] h-[480px] rounded-xl border border-border bg-background p-8 transition-all hover:border-foreground-ghost hover:shadow-2xl hover:shadow-primary/10 cursor-pointer overflow-hidden my-auto"
             >
               {/* Gradient Background */}
               <div
-                className={`gradient-bg absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-[0.05] transition-opacity`}
+                className={`gradient-bg absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-[0.03] transition-opacity`}
               />
 
               {/* Content */}
               <div className="relative z-10 h-full flex flex-col">
-                {/* Category Badge */}
-                <div className="mb-4">
-                  <span className="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-foreground/5 text-foreground/60">
-                    {service.category.toUpperCase()}
+                {/* Code-style index */}
+                <div className="mb-6">
+                  <span className="font-mono text-xs text-foreground-ghost tracking-wider">
+                    {String(index + 1).padStart(2, "0")} // {service.category}
                   </span>
                 </div>
 
                 {/* Icon */}
-                <div className="service-icon mb-6 text-6xl">{service.icon}</div>
+                <div className="service-icon mb-6 text-5xl opacity-80">{service.icon}</div>
 
                 {/* Title */}
-                <h3 className="mb-4 text-2xl font-bold">{service.title}</h3>
+                <h3 className="mb-4 text-xl font-bold tracking-tight">{service.title}</h3>
 
                 {/* Description */}
-                <p className="text-foreground/60 flex-grow">{service.description}</p>
+                <p className="text-foreground-muted text-sm leading-relaxed flex-grow">{service.description}</p>
 
-                {/* Arrow */}
-                <div className="mt-6 flex items-center text-sm font-medium group-hover:gap-2 transition-all">
-                  <span>Learn more</span>
+                {/* Arrow - code style */}
+                <div className="mt-6 flex items-center text-sm font-mono text-foreground-subtle group-hover:text-foreground group-hover:gap-2 transition-all">
+                  <span>explore()</span>
                   <span className="inline-block group-hover:translate-x-1 transition-transform">
                     →
                   </span>
-                </div>
-
-                {/* Number Badge */}
-                <div className="absolute top-8 right-8 text-7xl font-bold text-foreground/5">
-                  {String(index + 1).padStart(2, "0")}
                 </div>
               </div>
             </div>
           ))}
 
           {/* End CTA Card */}
-          <div className="flex-shrink-0 w-[380px] h-[480px] rounded-3xl border-2 border-dashed border-foreground/20 bg-foreground/[0.02] p-8 flex items-center justify-center my-auto">
+          <div className="flex-shrink-0 w-[380px] h-[480px] rounded-xl border border-dashed border-border bg-foreground-dim/50 p-8 flex items-center justify-center my-auto">
             <div className="text-center">
-              <h3 className="text-2xl font-bold mb-4">Want to see more?</h3>
-              <p className="text-foreground/60 mb-6">
-                Explore our full range of services and case studies
+              <div className="font-mono text-sm text-foreground-ghost mb-4">
+                export &#123;
+              </div>
+              <h3 className="text-2xl font-bold mb-4">Ready to build?</h3>
+              <p className="text-foreground-muted mb-8 text-sm">
+                Explore our portfolio and start your project
               </p>
-              <Link
-                href="/services"
-                className="inline-block px-6 py-3 bg-foreground text-background rounded-full font-medium hover:bg-foreground/90 transition-colors"
-              >
-                View All Services
-              </Link>
+              <CodeCTA functionName="viewAll" href="/services" variant="primary" />
+              <div className="font-mono text-sm text-foreground-ghost mt-4">
+                &#125;
+              </div>
             </div>
           </div>
         </div>
@@ -282,8 +281,8 @@ export function ServicesOverview() {
 
         {/* Scroll Hint */}
         <div className="mt-12 text-center">
-          <p className="text-sm text-foreground/40 flex items-center justify-center gap-2">
-            <span>Scroll horizontally</span>
+          <p className="text-sm text-foreground-ghost font-mono flex items-center justify-center gap-2">
+            <span>// scroll horizontally</span>
             <span className="inline-block animate-pulse">→</span>
           </p>
         </div>
