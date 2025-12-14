@@ -90,7 +90,7 @@ export function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative py-20 md:py-32 overflow-hidden"
+      className="relative min-h-screen flex items-center overflow-hidden py-20 md:py-32"
     >
       {/* Animated Backgrounds */}
       <div className="absolute inset-0 z-0">
