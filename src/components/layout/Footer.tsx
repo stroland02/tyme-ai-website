@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Container } from "./Container";
 import { Logo } from "../ui/Logo";
 
@@ -14,6 +15,15 @@ export function Footer() {
               <p className="text-sm text-foreground-muted">
                 AI & Web solutions for modern businesses
               </p>
+              <div className="pt-2">
+                <Image
+                  src="/logo.png"
+                  alt="Tyme AI Logo"
+                  width={200}
+                  height={200}
+                  className="object-contain w-full max-w-[200px] opacity-90 hover:opacity-100 transition-opacity duration-300"
+                />
+              </div>
             </div>
 
             {/* Services */}

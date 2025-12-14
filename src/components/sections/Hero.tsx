@@ -108,17 +108,6 @@ export function Hero() {
             <CodeLabel index="01">AI & Web Development</CodeLabel>
           </div>
 
-          {/* Logo */}
-          <div className="mb-8 md:mb-12 flex justify-start">
-            <Image
-              src="/logo.png"
-              alt="Tyme AI Logo"
-              width={400}
-              height={400}
-              className="object-contain w-full max-w-md opacity-90 hover:opacity-100 transition-opacity duration-300"
-            />
-          </div>
-
           {/* Main Headline - Code aesthetic */}
           <div className="mb-6 md:mb-8 space-y-2 md:space-y-4">
             <div ref={headlineRef}>
