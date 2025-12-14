@@ -9,24 +9,24 @@ export function MobileMenu() {
 
   return (
     <>
-      {/* Hamburger Button */}
+      {/* Hamburger Button - More visible */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="md:hidden flex flex-col gap-1.5 p-2"
+        className="md:hidden flex flex-col justify-center items-center gap-1.5 p-3 rounded-lg border border-border hover:border-foreground-ghost hover:bg-foreground-dim transition-all"
         aria-label="Toggle menu"
       >
         <span
-          className={`block h-0.5 w-6 bg-foreground transition-transform ${
+          className={`block h-0.5 w-6 bg-foreground transition-all duration-300 ${
             isOpen ? "rotate-45 translate-y-2" : ""
           }`}
         />
         <span
-          className={`block h-0.5 w-6 bg-foreground transition-opacity ${
+          className={`block h-0.5 w-6 bg-foreground transition-all duration-300 ${
             isOpen ? "opacity-0" : ""
           }`}
         />
         <span
-          className={`block h-0.5 w-6 bg-foreground transition-transform ${
+          className={`block h-0.5 w-6 bg-foreground transition-all duration-300 ${
             isOpen ? "-rotate-45 -translate-y-2" : ""
           }`}
         />
@@ -35,10 +35,17 @@ export function MobileMenu() {
       {/* Mobile Menu Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-background/95 backdrop-blur-xl z-50 md:hidden overflow-y-auto"
-          onClick={() => setIsOpen(false)}
+          className="fixed inset-0 bg-background/98 backdrop-blur-xl z-[100] md:hidden overflow-y-auto"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setIsOpen(false);
+            }
+          }}
         >
-          <div className="min-h-screen flex flex-col items-center justify-center py-20 px-6">
+          <div
+            className="min-h-screen flex flex-col items-center justify-center py-20 px-6"
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* Close button */}
             <button
               onClick={() => setIsOpen(false)}
