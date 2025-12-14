@@ -130,7 +130,7 @@ export function Hero() {
           {/* Subheadline */}
           <p
             ref={subheadlineRef}
-            className="mb-12 ml-4 md:ml-8 max-w-2xl text-base sm:text-lg md:text-xl font-mono"
+            className="mb-12 ml-4 md:ml-8 text-base sm:text-lg md:text-xl font-mono whitespace-nowrap overflow-x-auto"
           >
             <span className="text-foreground-ghost">// </span>
             <span className="text-foreground-muted font-light">Time is money. We automate workflows so you can focus on growth.</span>
