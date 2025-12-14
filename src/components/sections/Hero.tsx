@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Container } from "../layout/Container";
@@ -95,6 +96,18 @@ export function Hero() {
       <div className="absolute inset-0 z-0">
         <AnimatedGrid />
         <ParticleBackground />
+
+        {/* Watermark Logo */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-5">
+          <Image
+            src="/logo.png"
+            alt="Tyme AI Watermark"
+            width={800}
+            height={800}
+            className="object-contain"
+            style={{ mixBlendMode: 'lighten' }}
+          />
+        </div>
       </div>
 
       {/* Gradient Overlay */}

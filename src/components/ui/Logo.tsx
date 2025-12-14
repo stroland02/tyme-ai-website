@@ -21,14 +21,10 @@ export function Logo({ className = "", size = 40, showText = true, animateGradie
         priority
       />
 
-      {/* Text logo with syntax brackets */}
+      {/* Text logo without brackets */}
       {showText && (
-        <span className="font-mono text-lg font-bold">
-          <span className="text-foreground-subtle">&lt;</span>
-          <span className={animateGradient ? "bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]" : ""}>
-            Tyme AI
-          </span>
-          <span className="text-foreground-subtle">/&gt;</span>
+        <span className={`font-mono text-xl font-bold ${animateGradient ? "bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]" : ""}`}>
+          Tyme AI
         </span>
       )}
     </div>
