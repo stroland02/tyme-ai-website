@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Container } from "./Container";
 import { CodeCTA } from "../ui/CodeCTA";
+import { MobileMenu } from "./MobileMenu";
 
 export function Header() {
   return (
@@ -8,13 +9,13 @@ export function Header() {
       <Container>
         <div className="flex h-16 items-center justify-between">
           {/* Logo - Code style */}
-          <Link href="/" className="font-mono text-lg font-bold hover:text-foreground-muted transition-colors">
+          <Link href="/" className="font-mono text-base md:text-lg font-bold hover:text-foreground-muted transition-colors">
             <span className="text-foreground-subtle">&lt;</span>
             Tyme AI
             <span className="text-foreground-subtle">/&gt;</span>
           </Link>
 
-          {/* Navigation */}
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
             <Link
               href="/services"
@@ -42,10 +43,13 @@ export function Header() {
             </Link>
           </nav>
 
-          {/* CTA Button */}
-          <div className="flex items-center gap-4">
+          {/* Desktop CTA Button */}
+          <div className="hidden md:flex items-center gap-4">
             <CodeCTA functionName="contact" href="/contact" size="sm" />
           </div>
+
+          {/* Mobile Menu */}
+          <MobileMenu />
         </div>
       </Container>
     </header>

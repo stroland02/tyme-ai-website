@@ -5,8 +5,8 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-background">
       <Container>
-        <div className="py-12 md:py-16">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
+        <div className="py-8 md:py-12 lg:py-16">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4">
             {/* Company Info */}
             <div className="space-y-4">
               <h3 className="text-lg font-bold font-mono">
@@ -92,8 +92,8 @@ export function Footer() {
           </div>
 
           {/* Bottom Bar */}
-          <div className="mt-12 border-t border-border-subtle pt-8 text-sm text-foreground-ghost">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-2">
+          <div className="mt-8 md:mt-12 border-t border-border-subtle pt-6 md:pt-8 text-sm text-foreground-ghost">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-2 text-center md:text-left">
               <p className="font-mono text-xs">
                 © {new Date().getFullYear()} Tyme AI. All rights reserved.
               </p>

@@ -103,17 +103,17 @@ export function Hero() {
       <Container>
         <div className="relative z-10 mx-auto max-w-5xl">
           {/* Code-style label */}
-          <div ref={badgeRef} className="mb-8">
+          <div ref={badgeRef} className="mb-6 md:mb-8">
             <CodeLabel index="01">AI & Web Development</CodeLabel>
           </div>
 
           {/* Main Headline - Code aesthetic */}
-          <div className="mb-8 space-y-4">
+          <div className="mb-6 md:mb-8 space-y-2 md:space-y-4">
             <div ref={headlineRef}>
-              <SyntaxHighlight type="const" className="mb-4 text-base md:text-lg">
+              <SyntaxHighlight type="const" className="mb-2 md:mb-4 text-sm md:text-base lg:text-lg">
                 mission = &#123;
               </SyntaxHighlight>
-              <h1 className="ml-4 md:ml-8 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight">
+              <h1 className="ml-2 md:ml-4 lg:ml-8 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-tight">
                 <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent glow-text">
                   Custom AI solutions.
                 </span>
@@ -121,7 +121,7 @@ export function Hero() {
                   Real business results.
                 </span>
               </h1>
-              <SyntaxHighlight type="const" className="mt-4 text-base md:text-lg">
+              <SyntaxHighlight type="const" className="mt-2 md:mt-4 text-sm md:text-base lg:text-lg">
                 &#125;
               </SyntaxHighlight>
             </div>
@@ -130,16 +130,15 @@ export function Hero() {
           {/* Subheadline */}
           <p
             ref={subheadlineRef}
-            className="mb-12 ml-4 md:ml-8 text-base sm:text-lg md:text-xl font-mono whitespace-nowrap overflow-x-auto"
+            className="mb-8 md:mb-12 ml-2 md:ml-4 lg:ml-8 text-sm sm:text-base md:text-lg lg:text-xl font-mono overflow-x-auto scrollbar-hide"
           >
-            <span className="text-foreground-ghost">// </span>
-            <span className="text-foreground-muted font-light">Time is money. We automate workflows so you can focus on growth.</span>
+            <span className="text-foreground-ghost whitespace-nowrap">// Time is money. We automate workflows so you can focus on growth.</span>
           </p>
 
           {/* CTA Buttons - Code style */}
           <div
             ref={ctaRef}
-            className="flex flex-col gap-4 sm:flex-row sm:items-center ml-4 md:ml-8"
+            className="flex flex-col gap-3 sm:flex-row sm:items-center ml-2 md:ml-4 lg:ml-8"
           >
             <CodeCTA functionName="getStarted" href="/contact" size="lg" />
             <CodeCTA
