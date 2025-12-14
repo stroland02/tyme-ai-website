@@ -215,10 +215,10 @@ export function ServicesOverview() {
         </div>
 
         {/* Horizontal Scrolling Cards */}
-        <div className="relative overflow-hidden flex items-center" style={{ minHeight: '600px' }}>
+        <div className="relative overflow-x-auto overflow-y-hidden flex items-center scrollbar-hide" style={{ minHeight: '420px' }}>
         <div
           ref={cardsWrapperRef}
-          className="flex gap-6"
+          className="flex gap-4 md:gap-6 px-4 md:px-0 mx-auto"
           style={{ width: "max-content" }}
         >
           {services.map((service, index) => (

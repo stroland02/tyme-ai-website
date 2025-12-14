@@ -1,19 +1,37 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { CodeCTA } from "../ui/CodeCTA";
 
 export function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
 
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   return (
     <>
       {/* Hamburger Button - More visible */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="md:hidden flex flex-col justify-center items-center gap-1.5 p-3 rounded-lg border border-border hover:border-foreground-ghost hover:bg-foreground-dim transition-all"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log('Menu button clicked, isOpen:', !isOpen);
+          setIsOpen(!isOpen);
+        }}
+        className="md:hidden flex flex-col justify-center items-center gap-1.5 p-3 rounded-lg border-2 border-foreground-ghost hover:border-foreground hover:bg-foreground-dim transition-all active:scale-95"
         aria-label="Toggle menu"
+        type="button"
       >
         <span
           className={`block h-0.5 w-6 bg-foreground transition-all duration-300 ${
@@ -35,7 +53,8 @@ export function MobileMenu() {
       {/* Mobile Menu Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-background/98 backdrop-blur-xl z-[100] md:hidden overflow-y-auto"
+          className="fixed inset-0 bg-black/95 backdrop-blur-xl md:hidden overflow-y-auto"
+          style={{ zIndex: 9999 }}
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setIsOpen(false);
