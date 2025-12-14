@@ -49,7 +49,7 @@ export function MobileMenu() {
           />
 
           {/* Dropdown Content - positioned fixed to break out of header constraints */}
-          <div className="fixed right-4 top-[7.5rem] w-[calc(100vw-2rem)] max-w-xs rounded-lg border border-border bg-background shadow-2xl z-[70]">
+          <div className="fixed right-4 top-[4.5rem] w-[calc(100vw-2rem)] max-w-xs rounded-lg border border-border bg-background shadow-2xl z-[70]">
             {/* Navigation Links */}
             <nav className="flex flex-col py-2">
               <Link

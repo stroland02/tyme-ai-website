@@ -8,12 +8,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-xl">
       <Container>
-        <div className="flex h-28 md:h-32 items-center justify-between gap-4">
-          {/* Logo with Spaceship */}
-          <Link href="/" className="hover:opacity-80 transition-opacity flex-shrink-0">
-            <Logo size={120} showText={true} animateGradient={true} />
-          </Link>
-
+        <div className="flex h-16 items-center justify-between gap-4">
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
             <Link
