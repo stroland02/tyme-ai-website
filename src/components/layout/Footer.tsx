@@ -91,9 +91,14 @@ export function Footer() {
           {/* Bottom Bar */}
           <div className="mt-8 md:mt-12 border-t border-border-subtle pt-6 md:pt-8 text-sm text-foreground-ghost">
             <div className="flex flex-col md:flex-row justify-between items-center gap-2 text-center md:text-left">
-              <p className="font-mono text-xs">
-                © {new Date().getFullYear()} Tyme AI. All rights reserved.
-              </p>
+              <div className="flex flex-col gap-1">
+                <p className="font-mono text-xs">
+                  © {new Date().getFullYear()} Tyme AI. All rights reserved.
+                </p>
+                <p className="font-mono text-xs">
+                  Based in Dover, New Hampshire
+                </p>
+              </div>
               <p className="font-mono text-xs">
                 built by Sebastian Roland
               </p>
