@@ -97,8 +97,8 @@ export function ParticleBackground() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       frameCount++;
 
-      // Randomly create shooting stars (1 in 180 frames = ~3 seconds at 60fps)
-      if (Math.random() < 0.006) {
+      // Randomly create shooting stars (slightly more frequent)
+      if (Math.random() < 0.008) {
         createShootingStar();
       }
 
