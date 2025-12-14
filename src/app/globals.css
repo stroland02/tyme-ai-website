@@ -58,6 +58,18 @@ body {
   }
 }
 
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 .glow-text {
   text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
 }
@@ -65,6 +77,10 @@ body {
 .glow-border {
   box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
   animation: glow-pulse 3s ease-in-out infinite;
+}
+
+.animate-gradient {
+  animation: gradient 3s ease infinite;
 }
 
 /* Hide scrollbars but keep functionality */
