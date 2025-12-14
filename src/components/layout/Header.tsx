@@ -11,7 +11,7 @@ export function Header() {
         <div className="flex h-16 items-center justify-between gap-4">
           {/* Logo with Spaceship */}
           <Link href="/" className="hover:opacity-80 transition-opacity flex-shrink-0">
-            <Logo size={32} showText={true} />
+            <Logo size={56} showText={true} />
           </Link>
 
           {/* Desktop Navigation */}

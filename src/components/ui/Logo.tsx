@@ -16,6 +16,7 @@ export function Logo({ className = "", size = 40, showText = true }: LogoProps) 
         width={size}
         height={size}
         className="flex-shrink-0"
+        style={{ mixBlendMode: 'lighten' }}
         priority
       />
 
