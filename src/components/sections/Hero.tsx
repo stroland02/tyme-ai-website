@@ -98,7 +98,7 @@ export function Hero() {
         <ParticleBackground />
 
         {/* Watermark Logo */}
-        <div className="absolute inset-0 flex items-start justify-center pt-2 opacity-5 hover:opacity-20 transition-opacity duration-700 ease-in-out">
+        <div className="absolute inset-0 flex items-start justify-center pt-2 opacity-0 hover:opacity-30 transition-opacity duration-500 ease-in-out">
           <Image
             src="/logo.png"
             alt="Tyme AI Watermark"
