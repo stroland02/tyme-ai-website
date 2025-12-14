@@ -18,7 +18,6 @@ export function Hero() {
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const subheadlineRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
-  const socialProofRef = useRef<HTMLDivElement>(null);
   const orb1Ref = useRef<HTMLDivElement>(null);
   const orb2Ref = useRef<HTMLDivElement>(null);
 
@@ -58,29 +57,7 @@ export function Hero() {
             duration: 0.8,
           },
           "-=0.5"
-        )
-        .from(
-          socialProofRef.current,
-          {
-            opacity: 0,
-            y: 20,
-            duration: 0.8,
-          },
-          "-=0.4"
         );
-
-      // Animate logo placeholders
-      gsap.from(".logo-placeholder", {
-        opacity: 0,
-        scale: 0.8,
-        duration: 0.5,
-        stagger: 0.1,
-        ease: "back.out(1.7)",
-        scrollTrigger: {
-          trigger: socialProofRef.current,
-          start: "top 80%",
-        },
-      });
 
       // Floating background orbs
       if (orb1Ref.current) {
@@ -138,10 +115,10 @@ export function Hero() {
               </SyntaxHighlight>
               <h1 className="ml-4 md:ml-8 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight">
                 <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent glow-text">
-                  AI that works.
+                  Custom AI solutions.
                 </span>
                 <span className="block bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent glow-text">
-                  Web that scales.
+                  Real business results.
                 </span>
               </h1>
               <SyntaxHighlight type="const" className="mt-4 text-base md:text-lg">
@@ -155,7 +132,7 @@ export function Hero() {
             ref={subheadlineRef}
             className="mb-12 ml-4 md:ml-8 max-w-2xl text-base text-foreground-muted sm:text-lg md:text-xl font-light"
           >
-            We build custom AI and modern web solutions for businesses ready to scale.
+            We build custom automation software and modern web solutions for businesses ready to scale.
           </p>
 
           {/* CTA Buttons - Code style */}
@@ -170,30 +147,6 @@ export function Hero() {
               variant="secondary"
               size="lg"
             />
-          </div>
-
-          {/* Stats - Developer metrics style */}
-          <div
-            ref={socialProofRef}
-            className="mt-20 pt-12 border-t border-border-subtle"
-          >
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-              {[
-                { label: "Projects", value: "50+" },
-                { label: "Clients", value: "30+" },
-                { label: "Success Rate", value: "98%" },
-                { label: "Years Active", value: "5+" },
-              ].map((stat, i) => (
-                <div key={i} className="logo-placeholder">
-                  <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-foreground-subtle font-mono uppercase tracking-wider">
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </Container>
