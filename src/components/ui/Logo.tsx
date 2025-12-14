@@ -24,7 +24,7 @@ export function Logo({ className = "", size = 40, showText = true, animateGradie
       {/* Text logo without brackets */}
       {showText && (
         <span className={`font-mono text-xl font-bold ${animateGradient ? "bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]" : ""}`}>
-          Tyme AI
+          TYME AI
         </span>
       )}
     </div>
