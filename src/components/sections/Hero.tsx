@@ -98,12 +98,12 @@ export function Hero() {
         <ParticleBackground />
 
         {/* Watermark Logo */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-5">
+        <div className="absolute inset-0 flex items-start justify-center pt-8 md:pt-12 opacity-5 hover:opacity-20 transition-opacity duration-700 ease-in-out">
           <Image
             src="/logo.png"
             alt="Tyme AI Watermark"
-            width={800}
-            height={800}
+            width={600}
+            height={600}
             className="object-contain"
             style={{ mixBlendMode: 'lighten' }}
           />
