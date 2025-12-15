@@ -19,6 +19,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Tyme AI - AI/ML & Web Development Solutions for Modern Businesses",
   description: "Custom AI/ML development, modern web applications, e-commerce solutions, automation, and integration services to help you scale faster and smarter.",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({
