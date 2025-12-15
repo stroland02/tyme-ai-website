@@ -110,7 +110,7 @@ export function Footer() {
                 Based in Dover, New Hampshire
               </p>
               <p className="font-mono text-xs">
-                built by Sebastian Roland
+                Owned by Sebastian Roland
               </p>
             </div>
           </div>
