@@ -17,7 +17,7 @@ export function Footer() {
               <p className="text-sm text-foreground-muted">
                 AI & Web solutions for modern businesses
               </p>
-              <div className="pt-2">
+              <div className="pt-2 flex justify-center">
                 <Image
                   src="/logo.png"
                   alt="Tyme AI Logo"
