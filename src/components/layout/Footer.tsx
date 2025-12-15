@@ -14,7 +14,7 @@ export function Footer() {
               <div className="flex justify-center">
                 <Logo size={72} showText={true} showImage={false} />
               </div>
-              <p className="text-sm text-foreground-muted">
+              <p className="text-sm text-foreground-muted text-center">
                 AI & Web solutions for modern businesses
               </p>
               <div className="pt-2 flex justify-center">
