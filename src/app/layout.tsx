@@ -20,8 +20,14 @@ export const metadata: Metadata = {
   title: "Tyme AI - AI/ML & Web Development Solutions for Modern Businesses",
   description: "Custom AI/ML development, modern web applications, e-commerce solutions, automation, and integration services to help you scale faster and smarter.",
   icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
+    icon: [
+      { url: "/logo.png", sizes: "32x32", type: "image/png" },
+      { url: "/logo.png", sizes: "192x192", type: "image/png" },
+      { url: "/logo.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/logo.png", sizes: "180x180", type: "image/png" },
+    ],
   },
 };
 
