@@ -1,9 +1,9 @@
 import { ImageResponse } from 'next/og';
 
-// Image metadata
+// Image metadata - larger size for better clarity
 export const size = {
-  width: 32,
-  height: 32,
+  width: 64,
+  height: 64,
 };
 export const contentType = 'image/png';
 
@@ -13,27 +13,16 @@ export default async function Icon() {
     (
       <div
         style={{
-          fontSize: 24,
+          fontSize: 56,
           background: 'transparent',
           width: '100%',
           height: '100%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          position: 'relative',
         }}
       >
-        {/* Use inline SVG or simple emoji as placeholder */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '28px',
-          }}
-        >
-          🚀
-        </div>
+        🚀
       </div>
     ),
     {
