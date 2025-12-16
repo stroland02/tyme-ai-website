@@ -16,7 +16,7 @@ const services = [
       "Full-stack web application development using modern frameworks like Next.js, React, and Django for scalable solutions.",
     icon: "💻",
     category: "web",
-    gradient: "from-blue-500 to-cyan-500",
+    gradient: "from-blue-500 to-purple-500",
   },
   {
     title: "AI/ML Consulting",
@@ -24,7 +24,7 @@ const services = [
       "Strategic guidance to identify AI opportunities and develop implementation roadmaps tailored to your business goals.",
     icon: "🎯",
     category: "ai",
-    gradient: "from-purple-500 to-pink-500",
+    gradient: "from-purple-500 to-blue-600",
   },
   {
     title: "E-commerce Solutions",
@@ -32,7 +32,7 @@ const services = [
       "Build powerful online stores with integrated payment systems, inventory management, and seamless user experiences.",
     icon: "🛒",
     category: "web",
-    gradient: "from-green-500 to-emerald-500",
+    gradient: "from-blue-600 to-purple-600",
   },
   {
     title: "Custom AI Development",
@@ -40,7 +40,7 @@ const services = [
       "Build bespoke machine learning models and AI systems designed specifically for your unique use cases.",
     icon: "🤖",
     category: "ai",
-    gradient: "from-orange-500 to-red-500",
+    gradient: "from-purple-600 to-blue-500",
   },
   {
     title: "Website Design & Development",
@@ -48,7 +48,7 @@ const services = [
       "Modern, responsive, and high-performance websites that drive engagement and convert visitors into customers.",
     icon: "🎨",
     category: "web",
-    gradient: "from-pink-500 to-rose-500",
+    gradient: "from-blue-400 to-purple-500",
   },
   {
     title: "Automation Solutions",
@@ -56,7 +56,7 @@ const services = [
       "Automate repetitive tasks and workflows using AI to increase efficiency and reduce operational costs.",
     icon: "⚡",
     category: "ai",
-    gradient: "from-yellow-500 to-orange-500",
+    gradient: "from-purple-500 to-blue-400",
   },
   {
     title: "API Development & Integration",
@@ -64,7 +64,7 @@ const services = [
       "RESTful APIs, third-party integrations, and microservices architecture to connect your systems seamlessly.",
     icon: "🔗",
     category: "web",
-    gradient: "from-indigo-500 to-blue-500",
+    gradient: "from-blue-500 to-purple-600",
   },
   {
     title: "Data Analysis & Insights",
@@ -72,7 +72,7 @@ const services = [
       "Transform raw data into actionable insights using advanced analytics and machine learning techniques.",
     icon: "📊",
     category: "ai",
-    gradient: "from-teal-500 to-cyan-500",
+    gradient: "from-purple-400 to-blue-500",
   },
 ];
 
