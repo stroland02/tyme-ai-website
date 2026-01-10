@@ -21,7 +21,7 @@ const services = [
   {
     title: "AI & Machine Learning",
     description:
-      "Custom AI models and integration services to automate complex tasks and generate actionable insights while ensuring strict data integrity.",
+      "Custom AI models and MLOps pipelines to automate complex tasks and generate actionable insights while ensuring strict data integrity.",
     icon: "🤖",
     category: "ai",
     gradient: "from-purple-500 to-pink-500",
@@ -29,7 +29,7 @@ const services = [
   {
     title: "Enterprise Software",
     description:
-      "Professional-grade desktop and internal applications designed for high-stakes business environments and complex data management.",
+      "Professional-grade applications using robust component suites like DevExpress, Syncfusion, and AG Grid for complex data management.",
     icon: "🏢",
     category: "enterprise",
     gradient: "from-blue-600 to-indigo-700",
@@ -45,7 +45,7 @@ const services = [
   {
     title: "Data Analysis & Insights",
     description:
-      "Transform raw data into actionable intelligence. We use advanced statistical methods and ML to uncover patterns and drive decisions.",
+      "Transform raw data into intelligence with custom dashboards (Plotly Dash) and integrations with BI platforms like Tableau and Power BI.",
     icon: "📊",
     category: "ai",
     gradient: "from-teal-400 to-cyan-500",

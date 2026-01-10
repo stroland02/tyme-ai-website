@@ -18,17 +18,17 @@ const services = [
   {
     id: "ai-ml",
     title: "AI & Machine Learning",
-    description: "Custom AI models and integration services to automate complex tasks and generate actionable insights while ensuring strict data integrity.",
+    description: "Custom AI models and MLOps pipelines to automate complex tasks and generate actionable insights while ensuring strict data integrity.",
     icon: "🤖",
-    features: ["Custom Model Training", "Data Integrity & Validation", "NLP & Chatbots", "Predictive Analytics"],
+    features: ["Custom Model Training", "MLOps (MLflow, dbt)", "Orchestration (Prefect, Airflow)", "Data Integrity & Validation"],
     gradient: "from-purple-500 to-pink-500"
   },
   {
     id: "enterprise-solutions",
     title: "Enterprise Software",
-    description: "Professional-grade desktop and internal applications designed for high-stakes business environments and complex data management.",
+    description: "Professional-grade desktop and web applications using robust component suites for complex data management and high-performance user interfaces.",
     icon: "🏢",
-    features: ["DevExpress Implementation", "WinForms Development", "Legacy System Migration", "Complex Data Architectures"],
+    features: ["DevExpress & Syncfusion", "WinForms & .NET MAUI", "High-Performance AG Grid", "Legacy System Migration"],
     gradient: "from-blue-600 to-indigo-700"
   },
   {
@@ -42,9 +42,9 @@ const services = [
   {
     id: "data-analysis",
     title: "Data Analysis & Insights",
-    description: "Transform raw data into actionable intelligence. We use advanced statistical methods and ML to uncover patterns and drive decisions.",
+    description: "Transform raw data into actionable intelligence with custom dashboards and BI integrations to uncover patterns and drive decisions.",
     icon: "📊",
-    features: ["Dashboarding & BI", "Statistical Modeling", "A/B Testing Analysis", "Data Visualization"],
+    features: ["BI Dashboards (Tableau, Power BI)", "Plotly Dash Development", "Statistical Modeling", "A/B Testing Analysis"],
     gradient: "from-teal-400 to-cyan-500"
   }
 ];
