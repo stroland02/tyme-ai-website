@@ -18,12 +18,12 @@ export function Footer() {
                 <p className="text-sm text-foreground-muted">
                   AI & Web solutions for modern businesses
                 </p>
-                <a 
-                  href="mailto:tyme.ai25@gmail.com" 
+                <Link 
+                  href="/contact" 
                   className="text-xs font-mono text-primary hover:text-primary/80 transition-colors"
                 >
                   tyme.ai25@gmail.com
-                </a>
+                </Link>
               </div>
               <div className="pt-2 flex justify-center">
                 <Image
@@ -42,22 +42,27 @@ export function Footer() {
               <ul className="space-y-2 text-sm text-foreground-muted font-mono">
                 <li>
                   <Link href="/services" className="hover:text-foreground transition-colors">
-                    webDev
+                    webDevelopment
                   </Link>
                 </li>
                 <li>
                   <Link href="/services" className="hover:text-foreground transition-colors">
-                    ecommerce
+                    aiMachineLearning
                   </Link>
                 </li>
                 <li>
                   <Link href="/services" className="hover:text-foreground transition-colors">
-                    aiMl
+                    enterpriseSoftware
                   </Link>
                 </li>
                 <li>
                   <Link href="/services" className="hover:text-foreground transition-colors">
-                    automation
+                    workflowAutomation
+                  </Link>
+                </li>
+                 <li>
+                  <Link href="/services" className="hover:text-foreground transition-colors">
+                    dataAnalysis
                   </Link>
                 </li>
               </ul>
