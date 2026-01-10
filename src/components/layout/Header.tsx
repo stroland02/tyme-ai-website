@@ -48,7 +48,7 @@ export function Header() {
           {/* Desktop CTA Button & Theme Toggle */}
           <div className="hidden md:flex items-center gap-4">
             <ThemeToggle />
-            <CodeCTA functionName="contact" href="/contact" size="sm" />
+            <CodeCTA functionName="contact" href="mailto:tyme.ai25@gmail.com" size="sm" />
           </div>
 
           {/* Mobile Menu */}

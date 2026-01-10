@@ -14,9 +14,17 @@ export function Footer() {
               <div className="flex justify-center">
                 <Logo size={72} showText={true} showImage={false} />
               </div>
-              <p className="text-sm text-foreground-muted text-center">
-                AI & Web solutions for modern businesses
-              </p>
+              <div className="space-y-2 text-center">
+                <p className="text-sm text-foreground-muted">
+                  AI & Web solutions for modern businesses
+                </p>
+                <a 
+                  href="mailto:tyme.ai25@gmail.com" 
+                  className="text-xs font-mono text-primary hover:text-primary/80 transition-colors"
+                >
+                  tyme.ai25@gmail.com
+                </a>
+              </div>
               <div className="pt-2 flex justify-center">
                 <Image
                   src="/logo.png"
@@ -75,7 +83,7 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/contact" className="hover:text-foreground transition-colors">
+                  <Link href="mailto:tyme.ai25@gmail.com" className="hover:text-foreground transition-colors">
                     contact
                   </Link>
                 </li>

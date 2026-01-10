@@ -141,7 +141,7 @@ export function Hero() {
             ref={ctaRef}
             className="flex flex-col gap-3 sm:flex-row sm:items-center ml-2 md:ml-4 lg:ml-8"
           >
-            <CodeCTA functionName="getStarted" href="/contact" size="lg" />
+            <CodeCTA functionName="getStarted" href="mailto:tyme.ai25@gmail.com" size="lg" />
             <CodeCTA
               functionName="viewWork"
               href="/portfolio"
