@@ -20,14 +20,14 @@ const posts = [
   },
   {
     id: 2,
-    slug: "choose-boring-technology",
-    title: "Choose Boring Technology",
-    author: "Dan McKinley",
-    source: "https://mcfunley.com/choose-boring-technology",
-    excerpt: "Innovation is a limited resource. 'Boring' technologies—stable, well-understood tools—are often the best choice because they let you focus on solving the actual business problem, not the problems of the technology itself. Spend your innovation tokens wisely.",
-    date: "2015-04-03",
-    readTime: "6 min read",
-    tags: ["Software Engineering", "Architecture", "Strategy"]
+    slug: "automation-paradox",
+    title: "The Automation Paradox: How AI Increases the Value of Human Expertise",
+    author: "MIT Sloan",
+    source: "https://mitsloan.mit.edu/ideas-made-to-matter/a-new-look-how-automation-changes-value-labor",
+    excerpt: "Counterintuitively, automating a task can make the humans who perform it more valuable. As AI handles routine cases, the remaining exceptions become more complex, requiring a higher level of human judgment, problem-solving, and expertise to manage both the exceptions and the automated system itself.",
+    date: "2023-09-12",
+    readTime: "4 min read",
+    tags: ["Automation", "AI Strategy", "Future of Work"]
   },
   {
     id: 3,
