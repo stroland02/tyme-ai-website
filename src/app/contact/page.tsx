@@ -28,17 +28,51 @@ function ContactForm() {
     budget: "",
     name: "",
     email: "",
+    file: null as File | null,
   });
+  const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleNext = () => setStep((prev) => prev + 1);
   const handleBack = () => setStep((prev) => prev - 1);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Placeholder for actual submission logic (e.g., API call)
-    console.log("Form Submitted:", formData);
-    setIsSubmitted(true);
+    setIsLoading(true);
+    setError(null);
+
+    const data = new FormData();
+    Object.keys(formData).forEach(key => {
+      const value = formData[key as keyof typeof formData];
+      if (value) {
+        data.append(key, value);
+      }
+    });
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        body: data,
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || 'Something went wrong.');
+      }
+
+      setIsSubmitted(true);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFormData({ ...formData, file: e.target.files[0] });
+    }
   };
 
   const renderStep = () => {
@@ -71,14 +105,25 @@ function ContactForm() {
         return (
           <div className="space-y-6">
             <h3 className="text-2xl font-bold">Tell us about your project.</h3>
-            <p className="text-foreground-muted">Briefly describe the scope and primary goals.</p>
+            <p className="text-foreground-muted">Briefly describe the scope, primary goals, and attach any relevant documents.</p>
             <textarea
               value={formData.scope}
               onChange={(e) => setFormData({ ...formData, scope: e.target.value })}
               className="w-full p-4 rounded-lg border border-border bg-background/50 focus:ring-2 focus:ring-primary focus:outline-none"
-              rows={6}
+              rows={5}
               placeholder="e.g., 'We need to automate our invoicing process by connecting our CRM to our accounting software...'"
             />
+            <div className="w-full px-4 py-3 rounded-lg border border-dashed border-border bg-background/50 text-center">
+              <input 
+                type="file" 
+                id="file-upload"
+                className="hidden"
+                onChange={handleFileChange}
+              />
+              <label htmlFor="file-upload" className="cursor-pointer text-sm font-mono text-primary hover:underline">
+                {formData.file ? `Selected: ${formData.file.name}` : "Attach a file (optional)"}
+              </label>
+            </div>
           </div>
         );
       case 3:
@@ -146,19 +191,26 @@ function ContactForm() {
     <div className="w-full max-w-3xl mx-auto">
       <div className="relative border border-border bg-background/30 backdrop-blur-sm rounded-xl p-8 md:p-12">
         <form onSubmit={handleSubmit}>
-          {renderStep()}
+          {error && <p className="text-red-500 text-sm mb-4 font-mono text-center">{`// Error: ${error}`}</p>}
+          
+          <div style={{ minHeight: '250px' }}>
+            {renderStep()}
+          </div>
+          
           <div className="mt-8 pt-6 border-t border-border/50 flex justify-between items-center">
             {step > 1 ? (
-              <button type="button" onClick={handleBack} className="text-sm font-mono text-foreground-subtle hover:text-foreground">
+              <button type="button" onClick={handleBack} disabled={isLoading} className="text-sm font-mono text-foreground-subtle hover:text-foreground disabled:opacity-50">
                 ← Back
               </button>
             ) : <div />}
+            
             {step === 2 || step === 4 ? (
               <CodeCTA 
-                functionName={step === 4 ? "submitInquiry" : "nextStep"}
+                functionName={isLoading ? "Submitting..." : (step === 4 ? "submitInquiry" : "nextStep")}
                 onClick={step === 2 ? handleNext : undefined}
                 type={step === 4 ? "submit" : "button"}
                 size="md" 
+                className={isLoading ? "opacity-50 cursor-not-allowed" : ""}
               />
             ) : <div />}
           </div>
