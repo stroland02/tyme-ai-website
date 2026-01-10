@@ -18,10 +18,18 @@ const services = [
   {
     id: "ai-ml",
     title: "AI & Machine Learning",
-    description: "Custom AI models and integration services to automate complex tasks and generate actionable insights from your data.",
+    description: "Custom AI models and integration services to automate complex tasks and generate actionable insights while ensuring strict data integrity.",
     icon: "🤖",
-    features: ["Custom Model Training", "NLP & Chatbots", "Predictive Analytics", "Computer Vision"],
+    features: ["Custom Model Training", "Data Integrity & Validation", "NLP & Chatbots", "Predictive Analytics"],
     gradient: "from-purple-500 to-pink-500"
+  },
+  {
+    id: "enterprise-solutions",
+    title: "Enterprise Software",
+    description: "Professional-grade desktop and internal applications designed for high-stakes business environments and complex data management.",
+    icon: "🏢",
+    features: ["DevExpress Implementation", "WinForms Development", "Legacy System Migration", "Complex Data Architectures"],
+    gradient: "from-blue-600 to-indigo-700"
   },
   {
     id: "automation",
