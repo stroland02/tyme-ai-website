@@ -82,7 +82,7 @@ function deliverValue() {
                         <p className="text-primary font-mono text-sm mt-1">Founder & Lead Engineer</p>
                       </div>
                       <p className="text-foreground-muted leading-relaxed">
-                        With a passion for cutting-edge technology and a vision for the future of AI, Sebastian founded Tyme AI to bridge the gap between complex machine learning models and practical business applications. He holds a Bachelor of Science in Mechanical Engineering from the University of New Hampshire, and his expertise spans from professional-grade DevExpress and WinForms implementations to high-scale data integrity systems.
+                        With a passion for cutting-edge technology and a vision for the future of AI, Sebastian founded Tyme AI to bridge the gap between complex machine learning models and practical business applications. He holds a Bachelor of Science in Mechanical Engineering from the University of New Hampshire, and his expertise spans from professional-grade software implementations to high-scale data integrity systems.
                       </p>
                       <div className="flex items-center gap-4 text-sm font-mono text-foreground-ghost">
                         <span>📍 East Kingston, NH</span>
