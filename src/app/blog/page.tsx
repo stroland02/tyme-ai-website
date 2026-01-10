@@ -9,14 +9,14 @@ import Link from "next/link";
 const posts = [
   {
     id: 1,
-    slug: "the-bitter-lesson",
-    title: "The Bitter Lesson",
-    author: "Rich Sutton",
-    source: "http://www.incompleteideas.net/IncIdeas/BitterLesson.html",
-    excerpt: "The biggest lesson from 70 years of AI research is that general-purpose methods that leverage computation are ultimately the most effective. Attempts to build-in human knowledge are often eclipsed by the sheer power of scalable computation, a 'bitter' pill for many researchers to swallow.",
-    date: "2019-03-13",
-    readTime: "7 min read",
-    tags: ["AI", "Strategy", "Computation"]
+    slug: "the-rise-of-ai-agents",
+    title: "The Rise of AI Agents",
+    author: "IBM",
+    source: "https://www.ibm.com/solutions/ai-agents",
+    excerpt: "AI agents are autonomous systems designed to perceive their environment, make decisions, and take actions to achieve specific goals. By combining large language models with execution capabilities, they can automate complex workflows, transforming enterprise productivity by handling tasks once thought to require human intelligence.",
+    date: "2024-05-20",
+    readTime: "5 min read",
+    tags: ["AI", "Automation", "Enterprise"]
   },
   {
     id: 2,
