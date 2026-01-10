@@ -89,7 +89,7 @@ export function CTA() {
             <div className="flex flex-col gap-4 sm:flex-row">
               <CodeCTA
                 functionName="startProject"
-                href="mailto:tyme.ai25@gmail.com"
+                href="/contact"
                 size="lg"
                 variant="primary"
               />

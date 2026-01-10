@@ -11,68 +11,36 @@ gsap.registerPlugin(ScrollTrigger);
 
 const services = [
   {
-    title: "Custom Web Applications",
+    title: "Web Development",
     description:
-      "Full-stack web application development using modern frameworks like Next.js, React, and Django for scalable solutions.",
-    icon: "💻",
+      "Modern, high-performance web applications built with Next.js and React. We focus on speed, accessibility, and user experience.",
+    icon: "🌐",
     category: "web",
-    gradient: "from-blue-500 to-purple-500",
+    gradient: "from-blue-500 to-cyan-400",
   },
   {
-    title: "AI/ML Consulting",
+    title: "AI & Machine Learning",
     description:
-      "Strategic guidance to identify AI opportunities and develop implementation roadmaps tailored to your business goals.",
-    icon: "🎯",
-    category: "ai",
-    gradient: "from-purple-500 to-blue-600",
-  },
-  {
-    title: "E-commerce Solutions",
-    description:
-      "Build powerful online stores with integrated payment systems, inventory management, and seamless user experiences.",
-    icon: "🛒",
-    category: "web",
-    gradient: "from-blue-600 to-purple-600",
-  },
-  {
-    title: "Custom AI Development",
-    description:
-      "Build bespoke machine learning models and AI systems designed specifically for your unique use cases.",
+      "Custom AI models and integration services to automate complex tasks and generate actionable insights while ensuring strict data integrity.",
     icon: "🤖",
     category: "ai",
-    gradient: "from-purple-600 to-blue-500",
+    gradient: "from-purple-500 to-pink-500",
   },
   {
-    title: "Website Design & Development",
+    title: "Enterprise Software",
     description:
-      "Modern, responsive, and high-performance websites that drive engagement and convert visitors into customers.",
-    icon: "🎨",
-    category: "web",
-    gradient: "from-blue-400 to-purple-500",
+      "Professional-grade desktop and internal applications designed for high-stakes business environments and complex data management.",
+    icon: "🏢",
+    category: "enterprise",
+    gradient: "from-blue-600 to-indigo-700",
   },
   {
-    title: "Automation Solutions",
+    title: "Workflow Automation",
     description:
-      "Automate repetitive tasks and workflows using AI to increase efficiency and reduce operational costs.",
+      "Streamline your business operations by connecting your favorite tools and automating repetitive manual processes.",
     icon: "⚡",
-    category: "ai",
-    gradient: "from-purple-500 to-blue-400",
-  },
-  {
-    title: "API Development & Integration",
-    description:
-      "RESTful APIs, third-party integrations, and microservices architecture to connect your systems seamlessly.",
-    icon: "🔗",
-    category: "web",
-    gradient: "from-blue-500 to-purple-600",
-  },
-  {
-    title: "Data Analysis & Insights",
-    description:
-      "Transform raw data into actionable insights using advanced analytics and machine learning techniques.",
-    icon: "📊",
-    category: "ai",
-    gradient: "from-purple-400 to-blue-500",
+    category: "automation",
+    gradient: "from-amber-400 to-orange-500",
   },
 ];
 

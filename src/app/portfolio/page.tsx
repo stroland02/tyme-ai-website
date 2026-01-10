@@ -107,7 +107,7 @@ export default function PortfolioPage() {
           {/* CTA */}
            <div className="flex flex-col items-center justify-center space-y-6 pt-12">
               <p className="text-foreground-muted text-center">Interested in seeing more detailed case studies?</p>
-              <CodeCTA functionName="requestAccess" href="mailto:tyme.ai25@gmail.com" size="md" variant="secondary" />
+              <CodeCTA functionName="requestAccess" href="/contact" size="md" variant="secondary" />
            </div>
 
         </div>

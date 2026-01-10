@@ -49,7 +49,7 @@ export default function PrivacyPage() {
             <section className="space-y-4">
               <h2 className="text-xl font-bold text-foreground">4. Contact Us</h2>
               <p>
-                If you have any questions about this privacy policy or our privacy practices, please contact us at: <a href="mailto:tyme.ai25@gmail.com" className="text-primary hover:underline">tyme.ai25@gmail.com</a>.
+                If you have any questions about this privacy policy or our privacy practices, please contact us via our <a href="/contact" className="text-primary hover:underline">contact page</a>.
               </p>
             </section>
           </div>

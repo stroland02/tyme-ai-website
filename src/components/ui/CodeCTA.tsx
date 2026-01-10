@@ -5,10 +5,12 @@ import { useState } from "react";
 
 interface CodeCTAProps {
   functionName: string;
-  href: string;
+  href?: string;
   variant?: "primary" | "secondary";
   size?: "sm" | "md" | "lg";
   className?: string;
+  onClick?: () => void;
+  type?: "button" | "submit";
 }
 
 export function CodeCTA({
@@ -17,6 +19,8 @@ export function CodeCTA({
   variant = "primary",
   size = "md",
   className = "",
+  onClick,
+  type = "button",
 }: CodeCTAProps) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -32,20 +36,21 @@ export function CodeCTA({
       "bg-transparent text-foreground border border-foreground-ghost hover:border-foreground-subtle hover:bg-foreground-dim",
   };
 
-  return (
-    <Link
-      href={href}
-      className={`
-        inline-flex items-center gap-2 font-mono
-        ${sizeClasses[size]}
-        ${variantClasses[variant]}
-        rounded transition-all duration-200
-        hover:shadow-lg hover:shadow-primary/20
-        ${className}
-      `}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+  const commonProps = {
+    className: `
+      inline-flex items-center justify-center gap-2 font-mono
+      ${sizeClasses[size]}
+      ${variantClasses[variant]}
+      rounded transition-all duration-200
+      hover:shadow-lg hover:shadow-primary/20
+      ${className}
+    `,
+    onMouseEnter: () => setIsHovered(true),
+    onMouseLeave: () => setIsHovered(false),
+  };
+
+  const content = (
+    <>
       <span className={variant === "primary" ? "text-white/70" : "text-foreground-subtle"}>
         {functionName}
       </span>
@@ -53,6 +58,20 @@ export function CodeCTA({
       {isHovered && (
         <span className="text-foreground-subtle animate-pulse">→</span>
       )}
-    </Link>
+    </>
+  );
+
+  if (href) {
+    return (
+      <Link href={href} {...commonProps}>
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <button type={type} onClick={onClick} {...commonProps}>
+      {content}
+    </button>
   );
 }

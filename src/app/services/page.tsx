@@ -38,14 +38,6 @@ const services = [
     icon: "⚡",
     features: ["Process Analysis", "API Integration", "Custom Workflows", "Bot Development"],
     gradient: "from-amber-400 to-orange-500"
-  },
-  {
-    id: "consulting",
-    title: "Tech Consulting",
-    description: "Strategic guidance to help you navigate the rapidly evolving technology landscape and make informed decisions.",
-    icon: "💡",
-    features: ["Digital Transformation", "Tech Stack Selection", "Architecture Review", "Security Audits"],
-    gradient: "from-green-400 to-emerald-600"
   }
 ];
 
@@ -110,7 +102,7 @@ export default function ServicesPage() {
           {/* Bottom CTA */}
           <div className="text-center pt-12 border-t border-border">
             <p className="text-lg text-foreground-muted mb-6">Need a custom solution tailored to your specific needs?</p>
-            <CodeCTA functionName="getQuote" href="mailto:tyme.ai25@gmail.com" size="lg" />
+            <CodeCTA functionName="getQuote" href="/contact" size="lg" />
           </div>
         </div>
       </Container>

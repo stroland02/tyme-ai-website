@@ -103,7 +103,7 @@ function deliverValue() {
               Let's discuss how our AI solutions can help you achieve your goals.
             </p>
             <div className="flex justify-center">
-              <CodeCTA functionName="contactUs" href="mailto:tyme.ai25@gmail.com" size="lg" />
+              <CodeCTA functionName="contactUs" href="/contact" size="lg" />
             </div>
           </div>
         </div>

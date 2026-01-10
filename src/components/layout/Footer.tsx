@@ -83,7 +83,7 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="mailto:tyme.ai25@gmail.com" className="hover:text-foreground transition-colors">
+                  <Link href="/contact" className="hover:text-foreground transition-colors">
                     contact
                   </Link>
                 </li>

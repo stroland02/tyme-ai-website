@@ -91,7 +91,7 @@ export function MobileMenu() {
               <div className="px-4 py-3">
                 <CodeCTA
                   functionName="contact"
-                  href="mailto:tyme.ai25@gmail.com"
+                  href="/contact"
                   size="sm"
                   className="w-full justify-center"
                 />

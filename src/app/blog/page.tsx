@@ -9,30 +9,36 @@ import Link from "next/link";
 const posts = [
   {
     id: 1,
-    slug: "future-of-ai-automation",
-    title: "The Future of AI Automation in Small Business",
-    excerpt: "How small businesses can leverage large language models to automate customer service and internal workflows without breaking the bank.",
-    date: "2024-03-15",
-    readTime: "5 min read",
-    tags: ["AI", "Automation", "SMB"]
+    slug: "the-bitter-lesson",
+    title: "The Bitter Lesson",
+    author: "Rich Sutton",
+    source: "http://www.incompleteideas.net/IncIdeas/BitterLesson.html",
+    excerpt: "The biggest lesson from 70 years of AI research is that general-purpose methods that leverage computation are ultimately the most effective. Attempts to build-in human knowledge are often eclipsed by the sheer power of scalable computation, a 'bitter' pill for many researchers to swallow.",
+    date: "2019-03-13",
+    readTime: "7 min read",
+    tags: ["AI", "Strategy", "Computation"]
   },
   {
     id: 2,
-    slug: "nextjs-performance-optimization",
-    title: "Optimizing Next.js Applications for Core Web Vitals",
-    excerpt: "A deep dive into advanced caching strategies, image optimization, and server components to achieve a perfect 100 Lighthouse score.",
-    date: "2024-02-28",
-    readTime: "8 min read",
-    tags: ["Web Dev", "Performance", "Next.js"]
+    slug: "choose-boring-technology",
+    title: "Choose Boring Technology",
+    author: "Dan McKinley",
+    source: "https://mcfunley.com/choose-boring-technology",
+    excerpt: "Innovation is a limited resource. 'Boring' technologies—stable, well-understood tools—are often the best choice because they let you focus on solving the actual business problem, not the problems of the technology itself. Spend your innovation tokens wisely.",
+    date: "2015-04-03",
+    readTime: "6 min read",
+    tags: ["Software Engineering", "Architecture", "Strategy"]
   },
   {
     id: 3,
-    slug: "building-ethical-ai",
-    title: "Principles for Building Ethical AI Systems",
-    excerpt: "Exploring the responsibility of developers to ensure fairness, transparency, and accountability in machine learning models.",
-    date: "2024-01-10",
-    readTime: "6 min read",
-    tags: ["Ethics", "AI", "Society"]
+    slug: "no-silver-bullet",
+    title: "No Silver Bullet — Essence and Accident in Software Engineering",
+    author: "Fred Brooks",
+    source: "http://worrydream.com/refs/Brooks-NoSilverBullet.pdf",
+    excerpt: "There is no single development, in either technology or management technique, which by itself promises even one order-of-magnitude improvement in productivity. We must distinguish between 'essential' complexity (the problem itself) and 'accidental' complexity (the tools). The easy wins are over.",
+    date: "1986-04-01",
+    readTime: "15 min read",
+    tags: ["Classic", "Software Engineering", "Project Management"]
   }
 ];
 
@@ -50,12 +56,12 @@ export default function BlogPage() {
         <div className="max-w-4xl mx-auto space-y-16">
           {/* Header */}
           <div className="space-y-6">
-            <CodeLabel index="04">blog.latest</CodeLabel>
+            <CodeLabel index="04">blog.read</CodeLabel>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-              Insights & <span className="text-primary glow-text">Thoughts</span>
+              Foundational <span className="text-primary glow-text">Insights</span>
             </h1>
             <p className="text-xl text-foreground-muted font-light leading-relaxed">
-              Technical articles, industry trends, and updates from the Tyme AI team.
+              Our philosophy is built on time-tested principles from the software and AI industries. Here are a few of the foundational essays that shape our approach.
             </p>
           </div>
 
@@ -68,14 +74,16 @@ export default function BlogPage() {
               >
                 <div className="flex flex-col md:flex-row gap-6 md:items-start justify-between">
                   <div className="space-y-4 max-w-2xl">
-                    <div className="flex items-center gap-3 text-xs font-mono text-foreground-subtle">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-x-3 gap-y-1 text-xs font-mono text-foreground-subtle">
                       <span>{post.date}</span>
-                      <span>//</span>
+                      <span className="hidden sm:inline">//</span>
+                      <span>By {post.author}</span>
+                      <span className="hidden sm:inline">//</span>
                       <span>{post.readTime}</span>
                     </div>
                     
                     <h2 className="text-2xl font-bold group-hover:text-primary transition-colors">
-                      <Link href={`#`} className="focus:outline-none">
+                      <Link href={post.source} target="_blank" rel="noopener noreferrer" className="focus:outline-none">
                         <span className="absolute inset-0" aria-hidden="true" />
                         {post.title}
                       </Link>
@@ -94,23 +102,15 @@ export default function BlogPage() {
                     </div>
                   </div>
 
-                  <div className="hidden md:flex items-center justify-center h-full">
-                     <span className="text-primary/0 group-hover:text-primary transition-all duration-300 transform translate-x-[-10px] group-hover:translate-x-0">
-                       Read →
+                  <div className="flex items-center justify-start sm:justify-center h-full text-foreground-subtle group-hover:text-primary transition-all duration-300">
+                     <span className="flex items-center gap-1 font-mono text-xs">
+                       Read Original <span className="transform group-hover:translate-x-1 transition-transform">→</span>
                      </span>
                   </div>
                 </div>
               </article>
             ))}
           </div>
-
-          {/* Newsletter / RSS Placeholder */}
-          <div className="border-t border-border pt-12 text-center">
-             <p className="font-mono text-sm text-foreground-subtle">
-               // More articles coming soon...
-             </p>
-          </div>
-
         </div>
       </Container>
     </main>
