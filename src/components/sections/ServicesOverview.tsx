@@ -42,6 +42,14 @@ const services = [
     category: "automation",
     gradient: "from-amber-400 to-orange-500",
   },
+  {
+    title: "Data Analysis & Insights",
+    description:
+      "Transform raw data into actionable intelligence. We use advanced statistical methods and ML to uncover patterns and drive decisions.",
+    icon: "📊",
+    category: "ai",
+    gradient: "from-teal-400 to-cyan-500",
+  },
 ];
 
 export function ServicesOverview() {

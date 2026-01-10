@@ -112,14 +112,14 @@ export function Hero() {
           <div className="mb-6 md:mb-8 space-y-2 md:space-y-4">
             <div ref={headlineRef}>
               <SyntaxHighlight type="const" className="mb-2 md:mb-4 text-sm md:text-base lg:text-lg">
-                philosophy = &#123;
+                mission = &#123;
               </SyntaxHighlight>
               <h1 className="ml-2 md:ml-4 lg:ml-8 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-tight">
                 <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent glow-text">
-                  Results, not decks.
+                  Custom AI solutions.
                 </span>
                 <span className="block bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent glow-text">
-                  Builders, not advisors.
+                  Real business results.
                 </span>
               </h1>
               <SyntaxHighlight type="const" className="mt-2 md:mt-4 text-sm md:text-base lg:text-lg">
@@ -133,7 +133,7 @@ export function Hero() {
             ref={subheadlineRef}
             className="mb-8 md:mb-12 ml-2 md:ml-4 lg:ml-8 text-sm sm:text-base md:text-lg lg:text-xl font-mono overflow-x-auto scrollbar-hide"
           >
-            <span className="text-foreground-ghost whitespace-nowrap">// Fixed scope. Fixed timeline. Professional grade systems.</span>
+            <span className="text-foreground-ghost whitespace-nowrap">// Time is money. We automate workflows so you can focus on growth.</span>
           </p>
 
           {/* CTA Buttons - Code style */}

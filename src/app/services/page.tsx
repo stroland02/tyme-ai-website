@@ -38,6 +38,14 @@ const services = [
     icon: "⚡",
     features: ["Process Analysis", "API Integration", "Custom Workflows", "Bot Development"],
     gradient: "from-amber-400 to-orange-500"
+  },
+  {
+    id: "data-analysis",
+    title: "Data Analysis & Insights",
+    description: "Transform raw data into actionable intelligence. We use advanced statistical methods and ML to uncover patterns and drive decisions.",
+    icon: "📊",
+    features: ["Dashboarding & BI", "Statistical Modeling", "A/B Testing Analysis", "Data Visualization"],
+    gradient: "from-teal-400 to-cyan-500"
   }
 ];
 
