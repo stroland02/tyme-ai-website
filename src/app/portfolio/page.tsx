@@ -8,6 +8,15 @@ import { CodeCTA } from "@/components/ui/CodeCTA";
 
 const projects = [
   {
+    id: 4,
+    title: "EBOM Automation Tool",
+    category: "Manufacturing & Automation",
+    description: "A Python desktop tool that automates the entire Engineering Bill of Materials (EBOM) creation process. It utilizes agentic workflows to parse engineering data, integrate with external APIs for parts validation, and eliminate manual data entry errors, reducing a full day's work to just one hour.",
+    tech: ["Python", "ttkbootstrap", "API Integration", "Agentic Workflows"],
+    status: "Completed",
+    link: "#"
+  },
+  {
     id: 1,
     title: "EcoSmart Analytics",
     category: "AI & Data Visualization",
