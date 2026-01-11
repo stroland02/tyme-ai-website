@@ -105,7 +105,7 @@ export async function GET() {
 
     // Get current weight and goal weight
     const currentWeight = user.measurements[0]?.weight || profile.startingWeight;
-    const goalWeight = user.goals.find((g) => g.type === 'weight')?.targetValue;
+    const goalWeight = user.goals.find((g: any) => g.type === 'weight')?.targetValue;
 
     return NextResponse.json({
       streak,
