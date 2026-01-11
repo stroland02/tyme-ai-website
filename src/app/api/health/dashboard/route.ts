@@ -83,7 +83,7 @@ export async function GET() {
 
     // Get recent activity (combine workouts and meals)
     const recentActivity = [
-      ...user.workouts.slice(0, 5).map((w) => ({
+      ...user.workouts.slice(0, 5).map((w: any) => ({
         id: w.id,
         type: 'workout' as const,
         title: `${w.type} Workout`,
@@ -91,7 +91,7 @@ export async function GET() {
         timestamp: w.createdAt.toISOString(),
         icon: '🏋️',
       })),
-      ...user.meals.slice(0, 5).map((m) => ({
+      ...user.meals.slice(0, 5).map((m: any) => ({
         id: m.id,
         type: 'meal' as const,
         title: `${m.type} Meal`,
