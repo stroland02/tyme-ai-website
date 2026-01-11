@@ -10,7 +10,7 @@ type ServiceType = "web-dev" | "ai-ml" | "automation" | "consulting";
 interface Feature {
   id: string;
   label: string;
-  costMultiplier: number; // Simple multiplier for estimation
+  costMultiplier: number; 
   basePrice: number;
 }
 
@@ -76,14 +76,25 @@ const SERVICE_OPTIONS: ServiceOption[] = [
 
 export function ProjectEstimator() {
   const [step, setStep] = useState(1);
+  
+  // State
   const [selectedService, setSelectedService] = useState<ServiceType | null>(null);
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
+  
+  // Discovery State
+  const [discovery, setDiscovery] = useState({
+    businessStage: "",
+    timeline: "",
+    priority: "",
+  });
+
   const [formData, setFormData] = useState({
     scope: "",
     name: "",
     email: "",
     file: null as File | null,
   });
+
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -103,12 +114,16 @@ export function ProjectEstimator() {
       }
     });
 
-    // Create a range
+    // Adjust based on priority (Speed often costs more)
+    let multiplier = 1.3; // Default buffer
+    if (discovery.priority === "speed") multiplier = 1.5;
+    if (discovery.priority === "budget") multiplier = 1.1;
+
     return {
       min: total,
-      max: Math.round(total * 1.3) // 30% buffer
+      max: Math.round(total * multiplier)
     };
-  }, [selectedService, selectedFeatures]);
+  }, [selectedService, selectedFeatures, discovery.priority]);
 
   const handleNext = () => setStep((prev) => prev + 1);
   const handleBack = () => setStep((prev) => prev - 1);
@@ -127,6 +142,12 @@ export function ProjectEstimator() {
     data.append('service', selectedService || '');
     data.append('features', selectedFeatures.join(', '));
     data.append('budget', `$${estimate.min.toLocaleString()} - $${estimate.max.toLocaleString()}`);
+    
+    // Add Discovery Data
+    data.append('businessStage', discovery.businessStage);
+    data.append('timeline', discovery.timeline);
+    data.append('priority', discovery.priority);
+    
     data.append('scope', formData.scope);
     data.append('name', formData.name);
     data.append('email', formData.email);
@@ -174,7 +195,7 @@ export function ProjectEstimator() {
           <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
             <div className="flex justify-between items-end">
                 <h3 className="text-2xl font-bold">1. Select Project Type</h3>
-                <span className="text-xs font-mono text-foreground-subtle">STEP 01/04</span>
+                <span className="text-xs font-mono text-foreground-subtle">STEP 01/05</span>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -183,7 +204,7 @@ export function ProjectEstimator() {
                   key={s.id}
                   onClick={() => {
                     setSelectedService(s.id);
-                    setSelectedFeatures([]); // Reset features on service change
+                    setSelectedFeatures([]); 
                     handleNext();
                   }}
                   className={`group p-6 rounded-xl border text-left transition-all duration-200 hover:shadow-lg ${
@@ -200,16 +221,93 @@ export function ProjectEstimator() {
             </div>
           </div>
         );
+      
       case 2:
+        return (
+           <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
+             <div className="flex justify-between items-end">
+                <div>
+                  <h3 className="text-2xl font-bold">2. Business Context</h3>
+                  <p className="text-foreground-muted text-sm mt-1">Help us understand your goals.</p>
+                </div>
+                <span className="text-xs font-mono text-foreground-subtle">STEP 02/05</span>
+            </div>
+
+            <div className="space-y-4">
+              {/* Business Stage */}
+              <div>
+                <label className="text-sm font-bold block mb-2">Current Stage</label>
+                <div className="grid grid-cols-3 gap-2">
+                  {["Idea / Concept", "Early Startup", "Established Biz"].map(opt => (
+                    <button
+                      key={opt}
+                      type="button"
+                      onClick={() => setDiscovery({ ...discovery, businessStage: opt })}
+                      className={`p-3 text-sm rounded-lg border text-center transition-all ${
+                        discovery.businessStage === opt ? "bg-primary/20 border-primary text-primary" : "bg-background/30 border-border hover:bg-background/50"
+                      }`}
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Timeline */}
+              <div>
+                <label className="text-sm font-bold block mb-2">Desired Timeline</label>
+                <div className="grid grid-cols-3 gap-2">
+                  {["ASAP (< 1 mo)", "Standard (1-3 mo)", "Flexible"].map(opt => (
+                    <button
+                      key={opt}
+                      type="button"
+                      onClick={() => setDiscovery({ ...discovery, timeline: opt })}
+                      className={`p-3 text-sm rounded-lg border text-center transition-all ${
+                        discovery.timeline === opt ? "bg-primary/20 border-primary text-primary" : "bg-background/30 border-border hover:bg-background/50"
+                      }`}
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Priority */}
+              <div>
+                <label className="text-sm font-bold block mb-2">Top Priority</label>
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    { id: "quality", label: "Quality" }, 
+                    { id: "speed", label: "Speed" }, 
+                    { id: "budget", label: "Cost" }
+                  ].map(opt => (
+                    <button
+                      key={opt.id}
+                      type="button"
+                      onClick={() => setDiscovery({ ...discovery, priority: opt.id })}
+                      className={`p-3 text-sm rounded-lg border text-center transition-all ${
+                        discovery.priority === opt.id ? "bg-primary/20 border-primary text-primary" : "bg-background/30 border-border hover:bg-background/50"
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+           </div>
+        );
+
+      case 3:
         const currentService = SERVICE_OPTIONS.find(s => s.id === selectedService);
         return (
           <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
             <div className="flex justify-between items-end">
                 <div>
-                    <h3 className="text-2xl font-bold">2. Add Features</h3>
+                    <h3 className="text-2xl font-bold">3. Add Features</h3>
                     <p className="text-foreground-muted text-sm mt-1">Select the key components you need.</p>
                 </div>
-                <span className="text-xs font-mono text-foreground-subtle">STEP 02/04</span>
+                <span className="text-xs font-mono text-foreground-subtle">STEP 03/05</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -241,12 +339,12 @@ export function ProjectEstimator() {
             </div>
           </div>
         );
-      case 3:
+      case 4:
         return (
           <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
              <div className="flex justify-between items-end">
-                <h3 className="text-2xl font-bold">3. Project Details</h3>
-                <span className="text-xs font-mono text-foreground-subtle">STEP 03/04</span>
+                <h3 className="text-2xl font-bold">4. Project Details</h3>
+                <span className="text-xs font-mono text-foreground-subtle">STEP 04/05</span>
             </div>
             
             <textarea
@@ -272,12 +370,12 @@ export function ProjectEstimator() {
             </div>
           </div>
         );
-      case 4:
+      case 5:
         return (
           <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
             <div className="flex justify-between items-end">
-                <h3 className="text-2xl font-bold">4. Finalize Estimate</h3>
-                <span className="text-xs font-mono text-foreground-subtle">STEP 04/04</span>
+                <h3 className="text-2xl font-bold">5. Finalize Estimate</h3>
+                <span className="text-xs font-mono text-foreground-subtle">STEP 05/05</span>
             </div>
 
             <div className="bg-primary/5 border border-primary/20 rounded-lg p-6 space-y-4">
@@ -286,6 +384,10 @@ export function ProjectEstimator() {
                     <div className="flex justify-between">
                         <span className="text-foreground-muted">Service:</span>
                         <span className="font-medium">{SERVICE_OPTIONS.find(s => s.id === selectedService)?.label}</span>
+                    </div>
+                     <div className="flex justify-between">
+                        <span className="text-foreground-muted">Timeline:</span>
+                        <span className="font-medium">{discovery.timeline || "Not selected"}</span>
                     </div>
                     <div className="flex justify-between">
                         <span className="text-foreground-muted">Features:</span>
@@ -350,14 +452,18 @@ export function ProjectEstimator() {
               </button>
             ) : <div />}
             
-            {step < 4 ? (
+            {step < 5 ? (
                  <CodeCTA 
                     functionName="nextStep"
                     onClick={handleNext}
                     type="button"
                     size="md"
-                    // Disable next if no service selected in step 1
-                    className={step === 1 && !selectedService ? "opacity-50 pointer-events-none" : ""}
+                    // Disable next if no service selected in step 1, or discovery fields empty in step 2
+                    className={
+                        (step === 1 && !selectedService) ||
+                        (step === 2 && (!discovery.businessStage || !discovery.timeline))
+                        ? "opacity-50 pointer-events-none" : ""
+                    }
                  />
             ) : (
                 <CodeCTA 

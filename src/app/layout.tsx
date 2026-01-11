@@ -48,8 +48,8 @@ export default function RootLayout({
             <Header />
             {children}
             <Footer />
-            <ChatWidget />
           </SmoothScroll>
+          <ChatWidget />
         </ThemeProvider>
       </body>
     </html>

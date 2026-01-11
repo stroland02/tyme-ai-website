@@ -14,6 +14,9 @@ export async function POST(req: NextRequest) {
     const formData = await req.formData();
     const service = formData.get('service') as string;
     const features = formData.get('features') as string;
+    const businessStage = formData.get('businessStage') as string;
+    const timeline = formData.get('timeline') as string;
+    const priority = formData.get('priority') as string;
     const scope = formData.get('scope') as string;
     const budget = formData.get('budget') as string;
     const name = formData.get('name') as string;
@@ -38,6 +41,13 @@ export async function POST(req: NextRequest) {
         <h1>New Project Inquiry</h1>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
+        <hr>
+        <h2>Business Context:</h2>
+        <ul>
+          <li><strong>Stage:</strong> ${businessStage || 'Not specified'}</li>
+          <li><strong>Timeline:</strong> ${timeline || 'Not specified'}</li>
+          <li><strong>Top Priority:</strong> ${priority || 'Not specified'}</li>
+        </ul>
         <hr>
         <h2>Project Details:</h2>
         <p><strong>Service of Interest:</strong> ${service}</p>
