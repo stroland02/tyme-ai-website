@@ -13,6 +13,7 @@ export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
     const service = formData.get('service') as string;
+    const features = formData.get('features') as string;
     const scope = formData.get('scope') as string;
     const budget = formData.get('budget') as string;
     const name = formData.get('name') as string;
@@ -40,7 +41,8 @@ export async function POST(req: NextRequest) {
         <hr>
         <h2>Project Details:</h2>
         <p><strong>Service of Interest:</strong> ${service}</p>
-        <p><strong>Budget:</strong> ${budget}</p>
+        <p><strong>Selected Features:</strong> ${features || 'None selected'}</p>
+        <p><strong>Estimated Budget:</strong> ${budget}</p>
         <h3>Project Scope:</h3>
         <pre>${scope}</pre>
       `,

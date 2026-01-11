@@ -10,9 +10,9 @@ const services = [
   {
     id: "web-dev",
     title: "Web Development",
-    description: "Modern, high-performance web applications built with Next.js and React. We focus on speed, accessibility, and user experience.",
+    description: "Diverse expertise in industry-leading full-stack environments. Whether it's high-performance interfaces, robust backends, or scalable microservices, we build for any scale.",
     icon: "🌐",
-    features: ["Full-Stack Development", "eCommerce Solutions", "Progressive Web Apps", "Performance Optimization"],
+    features: ["Polyglot Full-Stack", "Python", "Go / Node.js / Rust", "Cloud-Native Infrastructure"],
     gradient: "from-blue-500 to-cyan-400"
   },
   {
@@ -20,7 +20,7 @@ const services = [
     title: "AI & Machine Learning",
     description: "Custom AI models and MLOps pipelines to automate complex tasks and generate actionable insights while ensuring strict data integrity.",
     icon: "🤖",
-    features: ["Custom Model Training", "MLOps (MLflow, dbt)", "Orchestration (Prefect, Airflow)", "Data Integrity & Validation"],
+    features: ["Custom Model Training", "MLOps Pipelines", "Workflow Orchestration", "Data Integrity & Validation"],
     gradient: "from-purple-500 to-pink-500"
   },
   {
@@ -28,7 +28,7 @@ const services = [
     title: "Enterprise Software",
     description: "Professional-grade desktop and web applications using robust component suites for complex data management and high-performance user interfaces.",
     icon: "🏢",
-    features: ["DevExpress & Syncfusion", "WinForms & .NET MAUI", "High-Performance AG Grid", "Legacy System Migration"],
+    features: ["Enterprise Components", "Native Desktop", "High-Performance Grid", "Legacy Migration"],
     gradient: "from-blue-600 to-indigo-700"
   },
   {
@@ -44,7 +44,7 @@ const services = [
     title: "Data Analysis & Insights",
     description: "Transform raw data into actionable intelligence with custom dashboards and BI integrations to uncover patterns and drive decisions.",
     icon: "📊",
-    features: ["BI Dashboards (Tableau, Power BI)", "Plotly Dash Development", "Statistical Modeling", "A/B Testing Analysis"],
+    features: ["BI Dashboards", "Data Visualization", "Statistical Modeling", "A/B Testing Analysis"],
     gradient: "from-teal-400 to-cyan-500"
   }
 ];
