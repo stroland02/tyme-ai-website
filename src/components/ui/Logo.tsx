@@ -14,7 +14,7 @@ export function Logo({ className = "", size = 40, showText = true, showImage = t
       {/* Futuristic Spaceship Logo */}
       {showImage && (
         <Image
-          src="/logo.png"
+          src="/logo-new.jpg"
           alt="Tyme AI Logo"
           width={size}
           height={size}

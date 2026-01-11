@@ -1,0 +1,449 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// =====================
+// AUTH & USER MODELS
+// =====================
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  password      String    // Hashed with bcrypt
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  profile       Profile?
+  goals         Goal[]
+  workouts      Workout[]
+  meals         Meal[]
+  measurements  Measurement[]
+  achievements  Achievement[]
+  experiments   Experiment[]
+  subscription  Subscription?
+  sessions      Session[]
+  accounts      Account[]
+  notifications NotificationPreference?
+  pushSubscriptions PushSubscription[]
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+// =====================
+// USER PROFILE & GOALS
+// =====================
+
+model Profile {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Demographics
+  age           Int?
+  gender        String?
+  heightCm      Float?
+  currentWeight Float? // kg
+
+  // Fitness Level
+  fitnessLevel  String  @default("beginner") // beginner, intermediate, advanced
+  activityLevel String  @default("moderate") // sedentary, light, moderate, very_active
+
+  // Preferences
+  dietaryPreference String   @default("omnivore") // omnivore, vegetarian, vegan, keto, paleo
+  equipment         String[] // home_gym, barbell, dumbbells, bodyweight, full_gym
+  availableDays     Int      @default(3) // days per week
+  minutesPerDay     Int      @default(45) // minutes per session
+  weeklyWorkoutGoal Int      @default(5) // target workouts per week
+  startingWeight    Float?   // starting weight for goal tracking
+
+  // Health
+  injuries     String[] @default([])
+  medications  String[] @default([])
+
+  // AI Settings
+  aiCoachTone  String   @default("supportive") // supportive, strict, humorous
+  experimentMode Boolean @default(false) // Enable A/B testing
+
+  @@map("profiles")
+}
+
+model Goal {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  type        String   // weight_loss, muscle_gain, strength, endurance, sport_specific
+  description String?
+  targetValue Float    // target weight, body fat %, squat weight, etc.
+  currentValue Float?
+  unit        String   @default("kg") // kg, lbs, %, reps
+  deadline    DateTime?
+  status      String   @default("active") // active, completed, abandoned
+  priority    Int      @default(1) // 1-5, for portfolio diversification
+
+  @@map("goals")
+}
+
+// =====================
+// WORKOUT & EXERCISES
+// =====================
+
+model Workout {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  date          DateTime @default(now())
+  type          String   // strength, cardio, flexibility, sport, active_recovery
+  name          String?  // "Push Day", "Leg Day", etc.
+  exercises     Exercise[]
+  durationMin   Int?     // Total workout duration
+  caloriesBurned Int?
+  notes         String?
+  userRating    Int?     // 1-5: how user felt
+  aiGenerated   Boolean  @default(true) // Was this AI-generated or user-created
+  completed     Boolean  @default(false)
+
+  // Context (for AI adaptation)
+  sleepHours    Float?   // Hours slept night before
+  energyLevel   Int?     // 1-5 self-reported
+  locationContext String? // home, gym, hotel, outdoor
+
+  @@map("workouts")
+}
+
+model Exercise {
+  id        String   @id @default(cuid())
+  workoutId String
+  workout   Workout  @relation(fields: [workoutId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  name        String
+  category    String   // chest, back, legs, shoulders, arms, core, cardio
+  sets        Int?
+  reps        Int?
+  weight      Float?   // kg or lbs
+  duration    Int?     // seconds (for cardio, planks, etc.)
+  distance    Float?   // km or miles (for running, cycling)
+  restTime    Int?     // seconds between sets
+  rpe         Int?     // Rate of Perceived Exertion (1-10)
+  completed   Boolean  @default(false)
+  notes       String?
+
+  @@map("exercises")
+}
+
+// =====================
+// NUTRITION
+// =====================
+
+model Meal {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  date        DateTime @default(now())
+  type        String   // breakfast, lunch, dinner, snack
+  name        String
+  description String?
+
+  // Macros
+  calories    Int
+  protein     Float    // grams
+  carbs       Float    // grams
+  fats        Float    // grams
+
+  // Optional
+  fiber       Float?   // grams
+  sugar       Float?   // grams
+
+  recipe      String?  // JSON with instructions
+  photoUrl    String?  // Uploaded photo
+  aiIdentified Boolean @default(false) // Photo recognition
+  logged      Boolean  @default(true)
+
+  @@map("meals")
+}
+
+// =====================
+// MEASUREMENTS & PROGRESS
+// =====================
+
+model Measurement {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  date       DateTime @default(now())
+
+  // Body Composition
+  weight     Float?   // kg
+  bodyFat    Float?   // percentage
+  muscleMass Float?   // kg
+
+  // Body Measurements (cm)
+  chest      Float?
+  waist      Float?
+  hips       Float?
+  biceps     Float?
+  thighs     Float?
+  calves     Float?
+  neck       Float?
+
+  // Performance Metrics (1RM estimates)
+  benchPress Float?
+  squat      Float?
+  deadlift   Float?
+  overheadPress Float?
+  pullups    Int?     // max reps
+  pushups    Int?     // max reps
+
+  // Other
+  restingHR  Int?     // beats per minute
+  hrv        Float?   // Heart Rate Variability (from wearable)
+  vo2Max     Float?   // Cardiovascular fitness
+
+  @@map("measurements")
+}
+
+// =====================
+// GAMIFICATION
+// =====================
+
+model Achievement {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  type        String   // streak, personal_record, goal_achieved, consistency, milestone
+  title       String
+  description String
+  icon        String   @default("🏆")
+  xp          Int      @default(100) // Experience points earned
+  rarity      String   @default("common") // common, rare, epic, legendary
+
+  @@map("achievements")
+}
+
+// =====================
+// A/B TESTING / EXPERIMENTS
+// =====================
+
+model Experiment {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  endDate   DateTime?
+
+  name        String   // "Morning vs Evening Workouts"
+  hypothesis  String   // "I perform better in the morning"
+  variable    String   // workout_time, training_split, diet_type, supplement
+  controlValue String  // "evening"
+  testValue   String   // "morning"
+
+  // Metrics to track
+  primaryMetric   String // strength_gain, energy_level, consistency
+  status          String @default("active") // active, completed, abandoned
+
+  // Results (JSON with statistical data)
+  results         String? // JSON with p-value, effect size, etc.
+  conclusion      String?
+  statisticalSignificance Boolean?
+
+  @@map("experiments")
+}
+
+// =====================
+// SUBSCRIPTIONS (STRIPE) - Multi-Service Support
+// =====================
+
+model Subscription {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Stripe customer (one per user, shared across all services)
+  stripeCustomerId String @unique
+
+  // Service subscriptions (user can have multiple)
+  serviceSubscriptions ServiceSubscription[]
+
+  @@map("subscriptions")
+}
+
+model ServiceSubscription {
+  id             String   @id @default(cuid())
+  subscriptionId String
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Service details
+  serviceId      String   // health_coaching, custom_software, ai_solutions, etc.
+  serviceName    String   // "Health & Fitness Coaching"
+
+  // Stripe subscription details
+  stripeSubscriptionId   String?  @unique
+  stripePriceId          String?
+  stripeCurrentPeriodEnd DateTime?
+
+  plan   String   @default("free") // free, starter, pro, elite
+  status String   @default("active") // active, canceled, past_due, trialing
+
+  // Service-specific metadata (JSON)
+  metadata String? // Store service-specific settings
+
+  @@map("service_subscriptions")
+  @@index([subscriptionId])
+  @@index([serviceId])
+}
+
+// =====================
+// API KEYS (for Elite tier)
+// =====================
+
+model ApiKey {
+  id        String   @id @default(cuid())
+  userId    String
+  createdAt DateTime @default(now())
+
+  key       String   @unique
+  name      String   // "My Custom Dashboard"
+  lastUsed  DateTime?
+  expiresAt DateTime?
+  active    Boolean  @default(true)
+
+  @@map("api_keys")
+}
+
+// =====================
+// NOTIFICATION SYSTEM
+// =====================
+
+model NotificationPreference {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Notification Channels
+  enableWebPush    Boolean @default(true)
+  enableEmail      Boolean @default(true)
+  enableSMS        Boolean @default(false)
+
+  // Notification Types
+  dailyMotivation  Boolean @default(true)
+  workoutReminder  Boolean @default(true)
+  goalMilestone    Boolean @default(true)
+  weeklyReport     Boolean @default(true)
+  streakAlert      Boolean @default(true) // About to lose streak
+  prOpportunity    Boolean @default(true) // Ready for new personal record
+
+  // Timing Preferences
+  preferredTime    String  @default("09:00") // HH:MM format, user's local timezone
+  timezone         String  @default("America/New_York")
+
+  // Contact Info (for SMS)
+  phoneNumber      String?
+
+  // Cached AI-generated content
+  lastMotivationalMessage String?
+  lastMessageGeneratedAt  DateTime?
+
+  @@map("notification_preferences")
+}
+
+model PushSubscription {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  // Web Push subscription data
+  endpoint       String   @unique
+  p256dh         String   // Encryption key
+  auth           String   // Auth secret
+
+  // Device info
+  userAgent      String?
+  deviceName     String?  // "iPhone 15 Pro", "Chrome on Windows", etc.
+  active         Boolean  @default(true)
+  lastUsed       DateTime @default(now())
+
+  @@map("push_subscriptions")
+}
+
+model NotificationLog {
+  id        String   @id @default(cuid())
+  userId    String
+  createdAt DateTime @default(now())
+
+  type        String   // daily_motivation, workout_reminder, goal_milestone, etc.
+  channel     String   // web_push, email, sms
+  title       String
+  body        String
+  status      String   @default("pending") // pending, sent, delivered, failed
+  errorMessage String?
+
+  // For tracking delivery
+  sentAt      DateTime?
+  deliveredAt DateTime?
+  openedAt    DateTime? // For email/push tracking
+
+  @@map("notification_logs")
+  @@index([userId, createdAt])
+}
+

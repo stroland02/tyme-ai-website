@@ -27,7 +27,7 @@ export function Footer() {
               </div>
               <div className="pt-2 flex justify-center">
                 <Image
-                  src="/logo.png"
+                  src="/logo-new.jpg"
                   alt="Tyme AI Logo"
                   width={200}
                   height={200}

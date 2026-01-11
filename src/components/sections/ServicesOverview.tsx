@@ -50,6 +50,15 @@ const services = [
     category: "ai",
     gradient: "from-teal-400 to-cyan-500",
   },
+  {
+    title: "AI Health & Fitness Coaching",
+    description:
+      "Professional fitness coaching platform with AI-powered workout plans, nutrition tracking, and stock-style progress visualization.",
+    icon: "💪",
+    category: "product",
+    gradient: "from-green-500 to-emerald-400",
+    link: "/services/health-coaching",
+  },
 ];
 
 export function ServicesOverview() {

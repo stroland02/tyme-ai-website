@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 import { CodeLabel } from "@/components/ui/CodeLabel";
 import { AnimatedGrid } from "@/components/ui/AnimatedGrid";
@@ -46,6 +47,15 @@ const services = [
     icon: "📊",
     features: ["BI Dashboards", "Data Visualization", "Statistical Modeling", "A/B Testing Analysis"],
     gradient: "from-teal-400 to-cyan-500"
+  },
+  {
+    id: "health-coaching",
+    title: "AI Health & Fitness Coaching",
+    description: "Professional fitness coaching powered by AI with personalized workout plans, nutrition tracking, and stock-style progress visualization.",
+    icon: "💪",
+    features: ["AI Personal Trainer", "Nutrition Planning", "Progress Analytics", "Motivation System"],
+    gradient: "from-green-500 to-emerald-400",
+    link: "/services/health-coaching"
   }
 ];
 
@@ -74,37 +84,61 @@ export default function ServicesPage() {
 
           {/* Services Grid */}
           <div className="grid md:grid-cols-2 gap-8">
-            {services.map((service) => (
-              <div 
-                key={service.id}
-                className="group relative overflow-hidden rounded-xl border border-border bg-background/50 p-8 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10"
-              >
-                <div className={`absolute top-0 left-0 w-1 h-full bg-gradient-to-b ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-                
-                <div className="relative z-10 space-y-6">
-                  <div className="flex items-center gap-4">
-                    <span className="text-4xl">{service.icon}</span>
-                    <h3 className="text-2xl font-bold group-hover:text-foreground transition-colors">{service.title}</h3>
-                  </div>
-                  
-                  <p className="text-foreground-muted leading-relaxed">
-                    {service.description}
-                  </p>
+            {services.map((service) => {
+              const CardContent = (
+                <>
+                  <div className={`absolute top-0 left-0 w-1 h-full bg-gradient-to-b ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
 
-                  <div className="space-y-3">
-                    <p className="text-xs font-mono text-foreground-subtle uppercase tracking-wider">// Capabilities</p>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {service.features.map((feature) => (
-                        <li key={feature} className="flex items-center gap-2 text-sm text-foreground-muted font-mono">
-                          <span className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${service.gradient}`} />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
+                  <div className="relative z-10 space-y-6">
+                    <div className="flex items-center gap-4">
+                      <span className="text-4xl">{service.icon}</span>
+                      <h3 className="text-2xl font-bold group-hover:text-foreground transition-colors">{service.title}</h3>
+                    </div>
+
+                    <p className="text-foreground-muted leading-relaxed">
+                      {service.description}
+                    </p>
+
+                    <div className="space-y-3">
+                      <p className="text-xs font-mono text-foreground-subtle uppercase tracking-wider">// Capabilities</p>
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {service.features.map((feature) => (
+                          <li key={feature} className="flex items-center gap-2 text-sm text-foreground-muted font-mono">
+                            <span className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${service.gradient}`} />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {service.link && (
+                      <div className="pt-2">
+                        <span className="text-sm font-mono text-primary group-hover:gap-2 flex items-center">
+                          Learn more <span className="inline-block group-hover:translate-x-1 transition-transform">→</span>
+                        </span>
+                      </div>
+                    )}
                   </div>
+                </>
+              );
+
+              return service.link ? (
+                <Link
+                  key={service.id}
+                  href={service.link}
+                  className="group relative overflow-hidden rounded-xl border border-border bg-background/50 p-8 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 cursor-pointer block"
+                >
+                  {CardContent}
+                </Link>
+              ) : (
+                <div
+                  key={service.id}
+                  className="group relative overflow-hidden rounded-xl border border-border bg-background/50 p-8 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10"
+                >
+                  {CardContent}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Bottom CTA */}
