@@ -23,10 +23,18 @@ export async function POST(req: NextRequest) {
 
     // Convert message history for Gemini
     // Filter to only include user and assistant roles for safety
-    const chatHistory = messages.slice(0, -1).map((m: any) => ({
-      role: m.role === 'assistant' ? 'model' : 'user',
-      parts: [{ text: m.content }],
-    }));
+    // Skip initial assistant greeting (Gemini requires history to start with user)
+    const chatHistory = messages.slice(0, -1)
+      .filter((m: any, idx: number) => {
+        // Keep all user messages
+        if (m.role === 'user') return true;
+        // Keep assistant messages only if there's a user message before them
+        return messages.slice(0, idx).some((msg: any) => msg.role === 'user');
+      })
+      .map((m: any) => ({
+        role: m.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: m.content }],
+      }));
 
     const lastMessage = messages[messages.length - 1].content;
 
