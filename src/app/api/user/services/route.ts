@@ -33,7 +33,7 @@ export async function GET() {
         icon: '💪',
         gradient: 'from-green-500 to-emerald-400',
         status: healthProfile ? 'subscribed' : 'not_subscribed',
-        plan: subscription?.serviceSubscriptions?.find(s => s.serviceId === 'health_coaching')?.plan || 'Free Trial',
+        plan: subscription?.serviceSubscriptions?.find((s: any) => s.serviceId === 'health_coaching')?.plan || 'Free Trial',
         href: '/services/health-coaching',
         onboardingHref: healthProfile ? '/app/health/dashboard' : '/app/onboarding',
       },
