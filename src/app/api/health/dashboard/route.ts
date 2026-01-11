@@ -59,7 +59,7 @@ export async function GET() {
     startOfWeek.setHours(0, 0, 0, 0);
 
     const weekWorkouts = user.workouts.filter(
-      (w) => new Date(w.createdAt) >= startOfWeek
+      (w: any) => new Date(w.createdAt) >= startOfWeek
     ).length;
 
     // Calculate today's calories
@@ -67,8 +67,8 @@ export async function GET() {
     startOfDay.setHours(0, 0, 0, 0);
 
     const todayCalories = user.meals
-      .filter((m) => new Date(m.createdAt) >= startOfDay)
-      .reduce((sum, meal) => sum + (meal.calories || 0), 0);
+      .filter((m: any) => new Date(m.createdAt) >= startOfDay)
+      .reduce((sum: number, meal: any) => sum + (meal.calories || 0), 0);
 
     // Calculate weekly goal progress (based on workout frequency goal)
     const weeklyGoalWorkouts = user.profile?.weeklyWorkoutGoal || 5;
