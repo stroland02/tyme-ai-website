@@ -41,13 +41,16 @@ export function ChatWidget() {
         body: JSON.stringify({ messages: [...messages, userMsg] }),
       });
 
-      if (!res.ok) throw new Error('Failed to fetch');
-
       const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Something went wrong');
+      }
+
       setMessages(prev => [...prev, data]);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      setMessages(prev => [...prev, { role: 'assistant', content: "Sorry, I'm having trouble connecting right now. Please try again later." }]);
+      setMessages(prev => [...prev, { role: 'assistant', content: `Error: ${error.message || "I'm having trouble connecting right now."}` }]);
     } finally {
       setIsLoading(false);
     }

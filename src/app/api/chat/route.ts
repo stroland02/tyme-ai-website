@@ -16,9 +16,9 @@ export async function POST(req: NextRequest) {
     const { messages } = await req.json();
     
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash",
-      systemInstruction: COMPANY_CONTEXT 
+    const model = genAI.getGenerativeModel({
+      model: "gemini-2.0-flash",
+      systemInstruction: COMPANY_CONTEXT
     });
 
     // Convert message history for Gemini
