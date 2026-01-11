@@ -11,7 +11,7 @@ interface Message {
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: "Hello! I'm the Tyme AI assistant. Ask me anything about our services or pricing." }
+    { role: 'assistant', content: "Hello! I" + "'m the Tyme AI assistant. Ask me anything about our services or pricing." }
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
