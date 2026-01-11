@@ -2,9 +2,9 @@ import { prisma } from './prisma';
 import OpenAI from 'openai';
 import webpush from 'web-push';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const openai = process.env.OPENAI_API_KEY
+  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  : null;
 
 // Configure Web Push (you'll need to generate VAPID keys)
 if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
@@ -47,6 +47,16 @@ export async function generateMotivationalMessage(userId: string) {
         ),
       }
     : null;
+
+  // Check if OpenAI is configured
+  if (!openai) {
+      console.warn("OpenAI API key not configured. Using fallback message.");
+      return {
+          title: `Hey ${user.name || 'Champion'}! 💪`,
+          body: `You're doing great! Keep pushing towards your goals. ${streak} days strong!`,
+          context: { streak, recentWorkouts: user.workouts.length, progress: recentProgress }
+      };
+  }
 
   // Build prompt for AI
   const prompt = `You are a motivational fitness coach. Generate a SHORT (2-3 sentences) motivational message for:
