@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { SessionProvider } from "@/components/providers/SessionProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,12 +45,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider>
-          <SmoothScroll>
-            <Header />
-            {children}
-            <Footer />
-          </SmoothScroll>
-          <ChatWidget />
+          <SessionProvider>
+            <SmoothScroll>
+              <Header />
+              {children}
+              <Footer />
+            </SmoothScroll>
+            <ChatWidget />
+          </SessionProvider>
         </ThemeProvider>
       </body>
     </html>

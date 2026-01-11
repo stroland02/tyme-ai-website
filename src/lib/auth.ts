@@ -20,7 +20,11 @@ export const authOptions: NextAuthOptions = {
           where: { email: credentials.email },
           include: {
             profile: true,
-            subscription: true,
+            subscription: {
+              include: {
+                serviceSubscriptions: true,
+              },
+            },
           },
         });
 
@@ -43,7 +47,7 @@ export const authOptions: NextAuthOptions = {
           name: user.name,
           image: user.image,
           hasProfile: !!user.profile,
-          subscriptionPlan: user.subscription?.plan || 'free',
+          subscriptionPlan: user.subscription?.serviceSubscriptions?.[0]?.plan || 'free',
         };
       },
     }),

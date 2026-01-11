@@ -26,23 +26,24 @@ export async function GET() {
     // Get user with all related data
     const user = await prisma.user.findUnique({
       where: { id: session.user.id },
-      include: {
-        profile: true,
-        workouts: {
-          orderBy: { createdAt: 'desc' },
-          take: 10,
+        include: {
+          profile: true,
+          subscription: true,
+          goals: true,
+          notifications: true,
+          workouts: {
+            include: {
+              exercises: true
+            }
+          },
+          meals: true,
+          measurements: {
+            orderBy: {
+              date: 'desc'
+            },
+            take: 1
+          },
         },
-        meals: {
-          orderBy: { createdAt: 'desc' },
-          take: 10,
-        },
-        measurements: {
-          orderBy: { createdAt: 'desc' },
-          take: 1,
-        },
-        goals: true,
-        notificationPreferences: true,
-      },
     });
 
     if (!user) {
@@ -77,7 +78,7 @@ export async function GET() {
     );
 
     // Get motivational message (cached or generate new)
-    let motivationalMessage = user.notificationPreferences?.lastMotivationalMessage ||
+    let motivationalMessage = user.notifications?.lastMotivationalMessage ||
       `You're doing great! Keep pushing towards your goals. ${streak} days strong! 💪`;
 
     // Get recent activity (combine workouts and meals)
@@ -86,7 +87,7 @@ export async function GET() {
         id: w.id,
         type: 'workout' as const,
         title: `${w.type} Workout`,
-        description: `${w.duration} minutes • ${w.exercises?.length || 0} exercises`,
+        description: `${w.durationMin} minutes • ${w.exercises?.length || 0} exercises`,
         timestamp: w.createdAt.toISOString(),
         icon: '🏋️',
       })),
