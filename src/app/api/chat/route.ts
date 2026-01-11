@@ -53,6 +53,14 @@ export async function POST(req: NextRequest) {
 
   } catch (error: any) {
     console.error("Gemini API Error:", error);
-    return NextResponse.json({ error: "I'm having trouble thinking right now. Please try again." }, { status: 500 });
+    console.error("Error details:", {
+      message: error.message,
+      status: error.status,
+      statusText: error.statusText,
+      stack: error.stack
+    });
+    return NextResponse.json({
+      error: `API Error: ${error.message || "I'm having trouble thinking right now. Please try again."}`
+    }, { status: 500 });
   }
 }
