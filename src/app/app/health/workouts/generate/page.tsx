@@ -21,12 +21,12 @@ interface GeneratedWorkout {
     rest: number;
   }[];
   cooldown: string;
+  workoutId?: string; // ID of the saved workout
 }
 
 export default function GenerateWorkoutPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [saving, setSaving] = useState(false);
   const [workout, setWorkout] = useState<GeneratedWorkout | null>(null);
 
   // Form state
@@ -42,15 +42,33 @@ export default function GenerateWorkoutPage() {
     setWorkout(null);
 
     try {
-      const response = await fetch('/api/ai/generate-workout', {
+      const response = await fetch('/api/health/ai/generate-workout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type, focus, duration, intensity, equipment }),
+        body: JSON.stringify({
+          workoutType: type,
+          duration: parseInt(duration)
+        }),
       });
 
       if (!response.ok) throw new Error('Failed to generate workout');
       const data = await response.json();
-      setWorkout(data);
+
+      // Map the API response to the expected workout format
+      setWorkout({
+        name: data.plan?.name || 'Generated Workout',
+        description: data.plan?.tips?.[0] || 'AI-generated workout plan',
+        warmup: data.plan?.warmup || '5 minutes light cardio',
+        exercises: data.workout?.exercises?.map((ex: any) => ({
+          name: ex.name,
+          sets: ex.sets,
+          reps: ex.reps,
+          notes: ex.notes,
+          rest: ex.restTime
+        })) || [],
+        cooldown: data.plan?.cooldown || '5 minutes stretching',
+        workoutId: data.workout?.id // Store the saved workout ID
+      });
     } catch (error) {
       console.error('Error:', error);
       alert('Failed to generate workout. Please try again.');
@@ -59,44 +77,13 @@ export default function GenerateWorkoutPage() {
     }
   };
 
-  const saveWorkout = async (shouldStart: boolean) => {
-    if (!workout) return;
-    setSaving(true);
+  const navigateToWorkout = (shouldStart: boolean) => {
+    if (!workout?.workoutId) return;
 
-    try {
-      const response = await fetch('/api/health/workouts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          type,
-          name: workout.name,
-          durationMin: duration,
-          notes: `${workout.description}\n\nWarmup: ${workout.warmup}\nCooldown: ${workout.cooldown}`,
-          exercises: workout.exercises.map(ex => ({
-            name: ex.name,
-            sets: ex.sets,
-            reps: ex.reps,
-            notes: ex.notes
-          })),
-          completed: false, // Save as planned
-          aiGenerated: true
-        }),
-      });
-
-      if (!response.ok) throw new Error('Failed to save');
-      
-      const savedWorkout = await response.json();
-      
-      if (shouldStart) {
-        router.push(`/app/health/workouts/${savedWorkout.id}`);
-      } else {
-        router.push('/app/health/dashboard');
-      }
-    } catch (error) {
-      console.error('Error saving:', error);
-      alert('Failed to save workout.');
-    } finally {
-      setSaving(false);
+    if (shouldStart) {
+      router.push(`/app/health/workouts/${workout.workoutId}`);
+    } else {
+      router.push('/app/health/dashboard');
     }
   };
 
@@ -277,20 +264,18 @@ export default function GenerateWorkoutPage() {
                     </div>
 
                     <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border">
-                      <Button 
-                        variant="outline" 
-                        size="md" 
-                        onClick={() => saveWorkout(false)}
-                        disabled={saving}
+                      <Button
+                        variant="outline"
+                        size="md"
+                        onClick={() => navigateToWorkout(false)}
                         className="gap-2"
                       >
-                        <Save className="w-4 h-4" /> Save Plan
+                        <Save className="w-4 h-4" /> View in Dashboard
                       </Button>
-                      <Button 
-                        variant="primary" 
-                        size="md" 
-                        onClick={() => saveWorkout(true)}
-                        disabled={saving}
+                      <Button
+                        variant="primary"
+                        size="md"
+                        onClick={() => navigateToWorkout(true)}
                         className="gap-2"
                       >
                         <Play className="w-4 h-4 fill-current" /> Start Now

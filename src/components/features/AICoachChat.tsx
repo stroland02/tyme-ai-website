@@ -55,23 +55,23 @@ export function AICoachChat() {
         content: m.content
       }));
 
-      const response = await fetch('/api/ai/coach', {
+      const response = await fetch('/api/health/ai/coach', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          message: userMessage.content,
-          messages: apiHistory
+          question: userMessage.content,
+          context: apiHistory.map(m => `${m.role}: ${m.content}`).join('\n')
         }),
       });
 
       if (!response.ok) throw new Error('Failed to get response');
 
       const data = await response.json();
-      
+
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: data.content,
+        content: data.advice || data.content,
         createdAt: Date.now()
       };
 

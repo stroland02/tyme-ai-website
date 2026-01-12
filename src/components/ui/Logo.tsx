@@ -8,9 +8,9 @@ interface LogoProps {
   animateGradient?: boolean;
 }
 
-export function Logo({ className = "", size = 40, showText = true, showImage = true, animateGradient = false }: LogoProps) {
+export function Logo({ className = "", size = 56, showText = true, showImage = true, animateGradient = false }: LogoProps) {
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
+    <div className={`flex items-center gap-3 ${className}`}>
       {/* Futuristic Spaceship Logo */}
       {showImage && (
         <Image
@@ -18,8 +18,7 @@ export function Logo({ className = "", size = 40, showText = true, showImage = t
           alt="Tyme AI Logo"
           width={size}
           height={size}
-          className="flex-shrink-0"
-          style={{ mixBlendMode: 'lighten' }}
+          className="flex-shrink-0 rounded-lg object-cover"
           priority
         />
       )}
