@@ -57,7 +57,7 @@ export async function calculateStreak(userId: string): Promise<number> {
     }
 
     // Start checking from the most recent activity date
-    let currentCheckDate = new Date(lastActivityTime);
+    const currentCheckDate = new Date(lastActivityTime);
     
     for (const activityTime of sortedDates) {
       if (activityTime === currentCheckDate.getTime()) {

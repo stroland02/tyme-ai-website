@@ -83,7 +83,7 @@ export function ParticleBackground() {
     };
 
     // Mouse interaction
-    let mouse = { x: 0, y: 0, radius: 150 };
+    const mouse = { x: 0, y: 0, radius: 150 };
 
     const handleMouseMove = (e: MouseEvent) => {
       mouse.x = e.clientX;

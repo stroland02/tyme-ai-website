@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
     const email = formData.get('email') as string;
     const file = formData.get('file') as File | null;
 
-    let attachments: any[] = [];
+    const attachments: any[] = [];
     if (file) {
       const buffer = Buffer.from(await file.arrayBuffer());
       attachments.push({

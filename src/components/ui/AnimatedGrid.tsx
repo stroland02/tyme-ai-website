@@ -24,8 +24,8 @@ export function AnimatedGrid() {
     // Grid configuration
     const gridSize = 50;
     const lineWidth = 1;
-    let offset = { x: 0, y: 0 };
-    let mouse = { x: -1000, y: -1000 }; // Start off-screen
+    const offset = { x: 0, y: 0 };
+    const mouse = { x: -1000, y: -1000 }; // Start off-screen
     const glowRadius = 300; // Radius of mouse glow effect
 
     // Track mouse position
