@@ -85,12 +85,12 @@ export async function GET() {
     const weeklyGoalProgress = Math.min(100, Math.round((weekWorkouts / weeklyGoalWorkouts) * 100));
 
     // Motivational message
-    const motivationalMessage = notificationPrefs?.lastMotivationalMessage || 
+    const motivationalMessage = notificationPrefs?.lastMotivationalMessage ||
       `You're doing great! Keep pushing towards your goals. ${streak} days strong! 💪`;
 
     // Activity Feed
     const recentActivity = [
-      ...recentWorkouts.map(w => ({
+      ...recentWorkouts.map((w: any) => ({
         id: w.id,
         type: 'workout' as const,
         title: `${w.type.charAt(0).toUpperCase() + w.type.slice(1)} Workout`,
@@ -98,7 +98,7 @@ export async function GET() {
         timestamp: w.createdAt.toISOString(),
         icon: '🏋️',
       })),
-      ...recentMeals.map(m => ({
+      ...recentMeals.map((m: any) => ({
         id: m.id,
         type: 'meal' as const,
         title: m.name,
@@ -110,8 +110,8 @@ export async function GET() {
 
     // Weight Chart Data
     const weightHistory = measurements
-      .filter(m => m.weight !== null)
-      .map(m => ({
+      .filter((m: any) => m.weight !== null)
+      .map((m: any) => ({
         date: new Date(m.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
         weight: m.weight
       }));
@@ -133,7 +133,7 @@ export async function GET() {
     });
 
     const consistencyData = last7Days.map(date => {
-      const hasWorkout = workoutHistory.some(w => {
+      const hasWorkout = workoutHistory.some((w: any) => {
         const wDate = new Date(w.createdAt);
         wDate.setHours(0, 0, 0, 0);
         return wDate.getTime() === date.getTime();
@@ -156,7 +156,7 @@ export async function GET() {
       recentActivity,
       weightHistory,
       consistencyData,
-      upcomingWorkouts: upcomingWorkouts.map(w => ({
+      upcomingWorkouts: upcomingWorkouts.map((w: any) => ({
         id: w.id,
         name: w.name,
         type: w.type,
