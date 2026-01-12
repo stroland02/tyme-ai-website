@@ -11,7 +11,7 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   BarChart, Bar, Cell
 } from 'recharts';
-import { Activity, Dumbbell, Utensils, Target, TrendingDown, Calendar } from 'lucide-react';
+import { Activity, Dumbbell, Utensils, Target, TrendingDown, Calendar, Play, ChevronRight } from 'lucide-react';
 
 interface DashboardStats {
   streak: number;
@@ -25,6 +25,7 @@ interface DashboardStats {
   recentActivity: any[];
   weightHistory: any[];
   consistencyData: any[];
+  upcomingWorkouts: any[];
 }
 
 export default function HealthDashboard() {
@@ -114,6 +115,31 @@ export default function HealthDashboard() {
             </div>
             <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
           </div>
+
+          {/* Up Next / Planned Workouts */}
+          {stats.upcomingWorkouts.length > 0 && (
+            <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
+              <h2 className="text-xl font-bold flex items-center gap-2">
+                <Play className="w-5 h-5 text-primary" /> Up Next
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {stats.upcomingWorkouts.map((w: any) => (
+                  <Link 
+                    key={w.id} 
+                    href={`/app/health/workouts/${w.id}`}
+                    className="bg-primary/5 border border-primary/20 rounded-xl p-4 hover:border-primary/50 transition-all group shadow-sm"
+                  >
+                    <div className="flex justify-between items-start mb-2">
+                      <span className="text-[10px] font-mono text-primary uppercase tracking-widest bg-primary/10 px-2 py-0.5 rounded">Planned</span>
+                      <ChevronRight className="w-4 h-4 text-primary opacity-0 group-hover:opacity-100 translate-x-[-4px] group-hover:translate-x-0 transition-all" />
+                    </div>
+                    <div className="font-bold text-foreground mb-1">{w.name}</div>
+                    <div className="text-xs text-foreground-muted">{w.exerciseCount} exercises • {w.type}</div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Core Stats Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -233,11 +259,19 @@ export default function HealthDashboard() {
               <h2 className="text-xl font-bold">Quick Actions</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <ActionCard 
+                  href="/app/health/workouts/generate" 
+                  icon="✨" 
+                  title="Generate Plan" 
+                  desc="AI-designed session" 
+                  code="ai.generate()" 
+                  color="purple" 
+                />
+                <ActionCard 
                   href="/app/health/workouts/log" 
                   icon="💪" 
-                  title="Log Workout" 
+                  title="Manual Log" 
                   desc="Record training" 
-                  code="logWorkout()" 
+                  code="manual.log()" 
                   color="green" 
                 />
                 <ActionCard 
@@ -245,7 +279,7 @@ export default function HealthDashboard() {
                   icon="🍽️" 
                   title="Log Meal" 
                   desc="Track nutrition" 
-                  code="logMeal()" 
+                  code="meal.log()" 
                   color="blue" 
                 />
                 <ActionCard 
@@ -253,8 +287,8 @@ export default function HealthDashboard() {
                   icon="🤖" 
                   title="AI Coach" 
                   desc="Ask for advice" 
-                  code="askCoach()" 
-                  color="purple" 
+                  code="coach.ask()" 
+                  color="indigo" 
                 />
               </div>
             </div>
@@ -308,6 +342,7 @@ function ActionCard({ href, icon, title, desc, code, color }: any) {
     green: 'from-green-500/10 to-emerald-500/10 border-green-500/20 hover:border-green-500/50 text-green-600',
     blue: 'from-blue-500/10 to-cyan-500/10 border-blue-500/20 hover:border-blue-500/50 text-blue-600',
     purple: 'from-purple-500/10 to-violet-500/10 border-purple-500/20 hover:border-purple-500/50 text-purple-600',
+    indigo: 'from-indigo-500/10 to-blue-500/10 border-indigo-500/20 hover:border-indigo-500/50 text-indigo-600',
   };
 
   return (

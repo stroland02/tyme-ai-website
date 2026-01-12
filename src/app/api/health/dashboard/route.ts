@@ -45,15 +45,15 @@ export async function GET() {
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
     // Fetch related data in parallel
-    const [weekWorkouts, todayMeals, recentWorkouts, recentMeals, measurements, workoutHistory] = await Promise.all([
+    const [weekWorkouts, todayMeals, recentWorkouts, recentMeals, measurements, workoutHistory, upcomingWorkouts] = await Promise.all([
       prisma.workout.count({
-        where: { userId, createdAt: { gte: startOfWeek } }
+        where: { userId, createdAt: { gte: startOfWeek }, completed: true }
       }),
       prisma.meal.findMany({
         where: { userId, createdAt: { gte: startOfDay } }
       }),
       prisma.workout.findMany({
-        where: { userId },
+        where: { userId, completed: true },
         orderBy: { createdAt: 'desc' },
         take: 10,
         include: { exercises: true }
@@ -68,8 +68,14 @@ export async function GET() {
         orderBy: { createdAt: 'asc' }
       }),
       prisma.workout.findMany({
-        where: { userId, createdAt: { gte: thirtyDaysAgo } },
+        where: { userId, createdAt: { gte: thirtyDaysAgo }, completed: true },
         select: { createdAt: true }
+      }),
+      prisma.workout.findMany({
+        where: { userId, completed: false },
+        orderBy: { createdAt: 'desc' },
+        take: 3,
+        include: { exercises: true }
       })
     ]);
 
@@ -149,7 +155,14 @@ export async function GET() {
       goalWeight: (await prisma.goal.findFirst({ where: { userId, type: 'weight' } }))?.targetValue,
       recentActivity,
       weightHistory,
-      consistencyData
+      consistencyData,
+      upcomingWorkouts: upcomingWorkouts.map(w => ({
+        id: w.id,
+        name: w.name,
+        type: w.type,
+        exerciseCount: w.exercises.length,
+        createdAt: w.createdAt.toISOString()
+      }))
     });
 
   } catch (error: any) {

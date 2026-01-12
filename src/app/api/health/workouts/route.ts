@@ -19,7 +19,9 @@ export async function POST(req: Request) {
       caloriesBurned, 
       notes, 
       userRating, 
-      exercises 
+      exercises,
+      completed = true,
+      aiGenerated = false
     } = body;
 
     // Create the workout with exercises
@@ -32,8 +34,8 @@ export async function POST(req: Request) {
         caloriesBurned: parseInt(caloriesBurned) || 0,
         notes: notes || '',
         userRating: parseInt(userRating) || 5,
-        completed: true,
-        aiGenerated: false,
+        completed: !!completed,
+        aiGenerated: !!aiGenerated,
         exercises: {
           create: exercises.map((ex: any) => ({
             name: ex.name,
@@ -41,7 +43,7 @@ export async function POST(req: Request) {
             sets: parseInt(ex.sets) || 0,
             reps: parseInt(ex.reps) || 0,
             weight: parseFloat(ex.weight) || 0,
-            completed: true,
+            completed: !!completed,
             notes: ex.notes || '',
           })),
         },
