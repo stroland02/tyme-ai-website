@@ -212,7 +212,7 @@ async function sendWebPush(userId: string, title: string, body: string): Promise
     });
 
     const results = await Promise.all(promises);
-    return results.some((r) => r === true);
+    return results.some((r: any) => r === true);
   } catch (error) {
     console.error('Web push error:', error);
     return false;
