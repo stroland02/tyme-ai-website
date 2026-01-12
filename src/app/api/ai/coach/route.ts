@@ -55,9 +55,9 @@ export async function POST(req: Request) {
     USER CONTEXT:
     Name: ${user.name}
     Age: ${user.profile?.age || 'Unknown'}
-    Goal: ${user.goals.map(g => `${g.type} (${g.targetValue} ${g.unit})`).join(', ') || 'General Fitness'}
+    Goal: ${user.goals.map((g: any) => `${g.type} (${g.targetValue} ${g.unit})`).join(', ') || 'General Fitness'}
     Current Streak: ${streak} days
-    Recent Workouts: ${user.workouts.map(w => `${w.type} (${w.durationMin}min)`).join(', ')}
+    Recent Workouts: ${user.workouts.map((w: any) => `${w.type} (${w.durationMin}min)`).join(', ')}
     Dietary Pref: ${user.profile?.dietaryPreference || 'None'}
     Injuries: ${user.profile?.injuries || 'None'}
 
