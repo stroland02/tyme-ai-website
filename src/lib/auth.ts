@@ -46,6 +46,7 @@ export const authOptions: NextAuthOptions = {
           email: user.email,
           name: user.name,
           image: user.image,
+          role: user.role,
           hasProfile: !!user.profile,
           subscriptionPlan: user.subscription?.serviceSubscriptions?.[0]?.plan || 'free',
         };
@@ -56,6 +57,7 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.role = user.role;
         token.hasProfile = user.hasProfile;
         token.subscriptionPlan = user.subscriptionPlan;
       }
@@ -64,6 +66,7 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
+        session.user.role = token.role as string;
         session.user.hasProfile = token.hasProfile as boolean;
         session.user.subscriptionPlan = token.subscriptionPlan as string;
       }

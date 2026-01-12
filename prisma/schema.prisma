@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
 }
 
 // =====================
@@ -20,6 +20,7 @@ model User {
   password      String    // Hashed with bcrypt
   emailVerified DateTime?
   image         String?
+  role          String    @default("user") // user, admin
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
