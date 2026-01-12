@@ -53,6 +53,9 @@ export function Header() {
             <ThemeToggle />
             {session ? (
               <>
+                <span className="text-sm font-mono text-foreground-subtle">
+                  Hi, <span className="text-foreground font-semibold">{session.user?.name || session.user?.email}</span>
+                </span>
                 <Button href="/account" variant="outline" size="sm">
                   Dashboard
                 </Button>

@@ -57,6 +57,9 @@ export function MobileMenu() {
               <div className="flex flex-col gap-2 px-4 py-3 border-b border-border">
                 {session ? (
                   <>
+                    <div className="text-sm font-mono text-foreground-subtle mb-2">
+                      Hi, <span className="text-foreground font-semibold">{session.user?.name || session.user?.email}</span>
+                    </div>
                     <Button href="/account" variant="outline" size="sm" onClick={closeMenu} className="w-full">
                       Dashboard
                     </Button>
