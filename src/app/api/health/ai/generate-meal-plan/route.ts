@@ -34,7 +34,7 @@ export async function POST(req: Request) {
     // Generate AI meal plan
     const mealPlan = await generateMealPlan({
       dietaryPreference: profile.dietaryPreference,
-      goals: profile.user.goals.map((g) => g.description || g.type),
+      goals: profile.user.goals.map((g: any) => g.description || g.type),
       calorieTarget: targetCalories,
       mealsPerDay,
       restrictions: profile.injuries ? [profile.injuries] : [], // Convert string to array

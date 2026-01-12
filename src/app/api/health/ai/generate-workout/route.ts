@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     // Generate AI workout plan
     const workoutPlan = await generateWorkoutPlan({
       fitnessLevel: profile.fitnessLevel,
-      goals: profile.user.goals.map((g) => g.description || g.type),
+      goals: profile.user.goals.map((g: any) => g.description || g.type),
       equipment: profile.equipment ? profile.equipment.split(',') : [],
       duration: duration || profile.minutesPerDay,
       workoutType: workoutType || 'strength',
