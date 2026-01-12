@@ -186,7 +186,7 @@ async function sendWebPush(userId: string, title: string, body: string): Promise
       },
     });
 
-    const promises = subscriptions.map(async (sub) => {
+    const promises = subscriptions.map(async (sub: any) => {
       try {
         await webpush.sendNotification(
           {
@@ -274,11 +274,11 @@ export async function sendAllDailyMotivations() {
   console.log(`Sending daily motivation to ${users.length} users at ${currentTime}`);
 
   const results = await Promise.allSettled(
-    users.map((pref) => sendDailyMotivation(pref.userId))
+    users.map((pref: any) => sendDailyMotivation(pref.userId))
   );
 
-  const successful = results.filter((r) => r.status === 'fulfilled').length;
-  const failed = results.filter((r) => r.status === 'rejected').length;
+  const successful = results.filter((r: any) => r.status === 'fulfilled').length;
+  const failed = results.filter((r: any) => r.status === 'rejected').length;
 
   return {
     total: users.length,
