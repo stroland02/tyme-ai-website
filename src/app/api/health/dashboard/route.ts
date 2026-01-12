@@ -80,7 +80,7 @@ export async function GET() {
     ]);
 
     // Aggregations
-    const todayCalories = todayMeals.reduce((sum: number, m) => sum + (m.calories || 0), 0);
+    const todayCalories = todayMeals.reduce((sum: number, m: any) => sum + (m.calories || 0), 0);
     const weeklyGoalWorkouts = profile.weeklyWorkoutGoal || 5;
     const weeklyGoalProgress = Math.min(100, Math.round((weekWorkouts / weeklyGoalWorkouts) * 100));
 
