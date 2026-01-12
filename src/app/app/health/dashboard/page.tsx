@@ -231,7 +231,7 @@ export default function HealthDashboard() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="space-y-4">
               <h2 className="text-xl font-bold">Quick Actions</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <ActionCard 
                   href="/app/health/workouts/log" 
                   icon="💪" 
@@ -247,6 +247,14 @@ export default function HealthDashboard() {
                   desc="Track nutrition" 
                   code="logMeal()" 
                   color="blue" 
+                />
+                <ActionCard 
+                  href="/app/health/coach" 
+                  icon="🤖" 
+                  title="AI Coach" 
+                  desc="Ask for advice" 
+                  code="askCoach()" 
+                  color="purple" 
                 />
               </div>
             </div>
@@ -299,6 +307,7 @@ function ActionCard({ href, icon, title, desc, code, color }: any) {
   const colorMap: any = {
     green: 'from-green-500/10 to-emerald-500/10 border-green-500/20 hover:border-green-500/50 text-green-600',
     blue: 'from-blue-500/10 to-cyan-500/10 border-blue-500/20 hover:border-blue-500/50 text-blue-600',
+    purple: 'from-purple-500/10 to-violet-500/10 border-purple-500/20 hover:border-purple-500/50 text-purple-600',
   };
 
   return (
