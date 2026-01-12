@@ -37,7 +37,7 @@ export async function POST(req: Request) {
       goals: profile.user.goals.map((g) => g.description || g.type),
       calorieTarget: targetCalories,
       mealsPerDay,
-      restrictions: profile.injuries, // Can be repurposed for dietary restrictions
+      restrictions: profile.injuries ? [profile.injuries] : [], // Convert string to array
     });
 
     // Save the meals to database

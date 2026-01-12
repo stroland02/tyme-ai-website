@@ -77,7 +77,7 @@ export default async function ContentPage() {
               </tr>
             </thead>
             <tbody>
-              {recentWorkouts.map((workout) => (
+              {recentWorkouts.map((workout: any) => (
                 <tr key={workout.id} className="border-b border-border hover:bg-foreground/5">
                   <td className="px-6 py-4 font-medium">{workout.user.name || 'Anonymous'}</td>
                   <td className="px-6 py-4">
