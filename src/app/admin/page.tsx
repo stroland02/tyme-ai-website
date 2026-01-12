@@ -77,7 +77,7 @@ export default async function AdminDashboard() {
               {(await prisma.user.findMany({
                 take: 5,
                 orderBy: { createdAt: 'desc' }
-              })).map((user) => (
+              })).map((user: any) => (
                 <tr key={user.id} className="border-b border-border hover:bg-foreground/5">
                   <td className="px-6 py-4 font-medium">{user.name || 'Anonymous'}</td>
                   <td className="px-6 py-4 text-foreground-muted">{user.email}</td>
