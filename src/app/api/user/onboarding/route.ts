@@ -13,9 +13,10 @@ export async function POST(request: Request) {
   try {
     const data = await request.json();
 
-    // Create profile
-    const profile = await prisma.profile.create({
-      data: {
+    // Create or update profile
+    const profile = await prisma.profile.upsert({
+      where: { userId: session.user.id },
+      create: {
         userId: session.user.id,
         age: data.age,
         gender: data.gender,
@@ -25,7 +26,19 @@ export async function POST(request: Request) {
         availableDays: data.availableDays,
         minutesPerDay: data.minutesPerDay,
         dietaryPreference: data.dietaryPreference,
-        equipment: data.equipment,
+        equipment: data.equipment.join(','),
+      },
+      update: {
+        age: data.age,
+        gender: data.gender,
+        heightCm: data.heightCm,
+        currentWeight: data.currentWeight,
+        fitnessLevel: data.fitnessLevel,
+        availableDays: data.availableDays,
+        minutesPerDay: data.minutesPerDay,
+        dietaryPreference: data.dietaryPreference,
+        equipment: data.equipment.join(','),
+        updatedAt: new Date(),
       },
     });
 
@@ -45,13 +58,19 @@ export async function POST(request: Request) {
       });
     }
 
-    // Create initial measurement record
-    await prisma.measurement.create({
-      data: {
-        userId: session.user.id,
-        weight: data.currentWeight,
-      },
+    // Create initial measurement record (only if none exists)
+    const existingMeasurements = await prisma.measurement.count({
+      where: { userId: session.user.id },
     });
+
+    if (existingMeasurements === 0) {
+      await prisma.measurement.create({
+        data: {
+          userId: session.user.id,
+          weight: data.currentWeight,
+        },
+      });
+    }
 
     return NextResponse.json({ success: true, profile });
   } catch (error: any) {
