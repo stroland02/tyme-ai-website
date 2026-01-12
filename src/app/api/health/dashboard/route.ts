@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { calculateStreak } from '@/lib/server-utils';
 
 export async function GET() {
   const session = await getServerSession(authOptions);
@@ -11,9 +12,11 @@ export async function GET() {
   }
 
   try {
+    const userId = session.user.id;
+    
     // Check if user has completed onboarding (has a profile)
     const profile = await prisma.profile.findUnique({
-      where: { userId: session.user.id },
+      where: { userId },
     });
 
     if (!profile) {
@@ -23,160 +26,134 @@ export async function GET() {
       );
     }
 
-    // Get user with all related data
-    const user = await prisma.user.findUnique({
-      where: { id: session.user.id },
-        include: {
-          profile: true,
-          subscription: true,
-          goals: true,
-          notifications: true,
-          workouts: {
-            include: {
-              exercises: true
-            }
-          },
-          meals: true,
-          measurements: {
-            orderBy: {
-              date: 'desc'
-            },
-            take: 1
-          },
-        },
-    });
+    // Get basic stats
+    const [streak, totalWorkouts, notificationPrefs] = await Promise.all([
+      calculateStreak(userId),
+      prisma.workout.count({ where: { userId } }),
+      prisma.notificationPreference.findUnique({ where: { userId } })
+    ]);
 
-    if (!user) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 });
-    }
-
-    // Calculate streak
-    const streak = await calculateStreak(session.user.id);
-
-    // Count this week's workouts
+    // Time ranges
     const startOfWeek = new Date();
     startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
     startOfWeek.setHours(0, 0, 0, 0);
 
-    const weekWorkouts = user.workouts.filter(
-      (w: any) => new Date(w.createdAt) >= startOfWeek
-    ).length;
-
-    // Calculate today's calories
     const startOfDay = new Date();
     startOfDay.setHours(0, 0, 0, 0);
 
-    const todayCalories = user.meals
-      .filter((m: any) => new Date(m.createdAt) >= startOfDay)
-      .reduce((sum: number, meal: any) => sum + (meal.calories || 0), 0);
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-    // Calculate weekly goal progress (based on workout frequency goal)
-    const weeklyGoalWorkouts = user.profile?.weeklyWorkoutGoal || 5;
-    const weeklyGoalProgress = Math.min(
-      100,
-      Math.round((weekWorkouts / weeklyGoalWorkouts) * 100)
-    );
+    // Fetch related data in parallel
+    const [weekWorkouts, todayMeals, recentWorkouts, recentMeals, measurements, workoutHistory] = await Promise.all([
+      prisma.workout.count({
+        where: { userId, createdAt: { gte: startOfWeek } }
+      }),
+      prisma.meal.findMany({
+        where: { userId, createdAt: { gte: startOfDay } }
+      }),
+      prisma.workout.findMany({
+        where: { userId },
+        orderBy: { createdAt: 'desc' },
+        take: 10,
+        include: { exercises: true }
+      }),
+      prisma.meal.findMany({
+        where: { userId },
+        orderBy: { createdAt: 'desc' },
+        take: 10
+      }),
+      prisma.measurement.findMany({
+        where: { userId, createdAt: { gte: thirtyDaysAgo } },
+        orderBy: { createdAt: 'asc' }
+      }),
+      prisma.workout.findMany({
+        where: { userId, createdAt: { gte: thirtyDaysAgo } },
+        select: { createdAt: true }
+      })
+    ]);
 
-    // Get motivational message (cached or generate new)
-    let motivationalMessage = user.notifications?.lastMotivationalMessage ||
+    // Aggregations
+    const todayCalories = todayMeals.reduce((sum, m) => sum + (m.calories || 0), 0);
+    const weeklyGoalWorkouts = profile.weeklyWorkoutGoal || 5;
+    const weeklyGoalProgress = Math.min(100, Math.round((weekWorkouts / weeklyGoalWorkouts) * 100));
+
+    // Motivational message
+    const motivationalMessage = notificationPrefs?.lastMotivationalMessage || 
       `You're doing great! Keep pushing towards your goals. ${streak} days strong! 💪`;
 
-    // Get recent activity (combine workouts and meals)
+    // Activity Feed
     const recentActivity = [
-      ...user.workouts.slice(0, 5).map((w: any) => ({
+      ...recentWorkouts.map(w => ({
         id: w.id,
         type: 'workout' as const,
-        title: `${w.type} Workout`,
-        description: `${w.durationMin} minutes • ${w.exercises?.length || 0} exercises`,
+        title: `${w.type.charAt(0).toUpperCase() + w.type.slice(1)} Workout`,
+        description: `${w.durationMin} min • ${w.exercises.length} exercises`,
         timestamp: w.createdAt.toISOString(),
         icon: '🏋️',
       })),
-      ...user.meals.slice(0, 5).map((m: any) => ({
+      ...recentMeals.map(m => ({
         id: m.id,
         type: 'meal' as const,
-        title: `${m.type} Meal`,
-        description: `${m.calories} calories • ${m.protein || 0}g protein`,
+        title: m.name,
+        description: `${m.calories} cal • ${m.protein}g P`,
         timestamp: m.createdAt.toISOString(),
         icon: '🍽️',
-      })),
-    ]
-      .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
-      .slice(0, 5);
+      }))
+    ].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()).slice(0, 5);
 
-    // Get current weight and goal weight
-    const currentWeight = user.measurements[0]?.weight || profile.startingWeight;
-    const goalWeight = user.goals.find((g: any) => g.type === 'weight')?.targetValue;
+    // Weight Chart Data
+    const weightHistory = measurements
+      .filter(m => m.weight !== null)
+      .map(m => ({
+        date: new Date(m.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+        weight: m.weight
+      }));
+
+    // If no measurements, add starting weight if available
+    if (weightHistory.length === 0 && profile.startingWeight) {
+      weightHistory.push({
+        date: 'Start',
+        weight: profile.startingWeight
+      });
+    }
+
+    // Workout Consistency (Last 7 days)
+    const last7Days = Array.from({ length: 7 }, (_, i) => {
+      const d = new Date();
+      d.setDate(d.getDate() - (6 - i));
+      d.setHours(0, 0, 0, 0);
+      return d;
+    });
+
+    const consistencyData = last7Days.map(date => {
+      const hasWorkout = workoutHistory.some(w => {
+        const wDate = new Date(w.createdAt);
+        wDate.setHours(0, 0, 0, 0);
+        return wDate.getTime() === date.getTime();
+      });
+      return {
+        day: date.toLocaleDateString('en-US', { weekday: 'short' }),
+        completed: hasWorkout ? 1 : 0
+      };
+    });
 
     return NextResponse.json({
       streak,
-      totalWorkouts: user.workouts.length,
+      totalWorkouts,
       weekWorkouts,
       todayCalories,
       weeklyGoalProgress,
       motivationalMessage,
-      currentWeight,
-      goalWeight,
+      currentWeight: measurements[measurements.length - 1]?.weight || profile.startingWeight,
+      goalWeight: (await prisma.goal.findFirst({ where: { userId, type: 'weight' } }))?.targetValue,
       recentActivity,
+      weightHistory,
+      consistencyData
     });
+
   } catch (error: any) {
     console.error('Failed to load dashboard:', error);
-    return NextResponse.json(
-      { error: error.message || 'Failed to load dashboard' },
-      { status: 500 }
-    );
-  }
-}
-
-// Calculate user's current streak (consecutive days with activity)
-async function calculateStreak(userId: string): Promise<number> {
-  try {
-    // Get all workouts and meals, sorted by date
-    const activities = await prisma.$queryRaw<Array<{ date: Date }>>`
-      SELECT DISTINCT DATE(created_at) as date
-      FROM (
-        SELECT created_at FROM workouts WHERE user_id = ${userId}
-        UNION ALL
-        SELECT created_at FROM meals WHERE user_id = ${userId}
-      ) as combined
-      ORDER BY date DESC
-    `;
-
-    if (activities.length === 0) return 0;
-
-    let streak = 0;
-    let currentDate = new Date();
-    currentDate.setHours(0, 0, 0, 0);
-
-    // Check if there's activity today or yesterday (to not break streak)
-    const lastActivityDate = new Date(activities[0].date);
-    lastActivityDate.setHours(0, 0, 0, 0);
-
-    const daysDiff = Math.floor(
-      (currentDate.getTime() - lastActivityDate.getTime()) / (1000 * 60 * 60 * 24)
-    );
-
-    if (daysDiff > 1) {
-      return 0; // Streak broken
-    }
-
-    // Count consecutive days
-    for (let i = 0; i < activities.length; i++) {
-      const activityDate = new Date(activities[i].date);
-      activityDate.setHours(0, 0, 0, 0);
-
-      const expectedDate = new Date(currentDate);
-      expectedDate.setDate(expectedDate.getDate() - i);
-
-      if (activityDate.getTime() === expectedDate.getTime()) {
-        streak++;
-      } else {
-        break;
-      }
-    }
-
-    return streak;
-  } catch (error) {
-    console.error('Error calculating streak:', error);
-    return 0;
+    return NextResponse.json({ error: 'Failed to load dashboard' }, { status: 500 });
   }
 }

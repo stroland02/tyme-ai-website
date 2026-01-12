@@ -1,6 +1,7 @@
 import { prisma } from './prisma';
 import OpenAI from 'openai';
 import webpush from 'web-push';
+import { calculateStreak } from './server-utils';
 
 const openai = process.env.OPENAI_API_KEY
   ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
@@ -26,14 +27,14 @@ export async function generateMotivationalMessage(userId: string) {
     include: {
       profile: true,
       goals: { where: { status: 'active' }, take: 3 },
-      workouts: { orderBy: { date: 'desc' }, take: 7 },
+      workouts: { orderBy: { createdAt: 'desc' }, take: 7 },
       measurements: { orderBy: { date: 'desc' }, take: 2 },
     },
   });
 
   if (!user) return null;
 
-  // Calculate streak
+  // Calculate streak using utility function
   const streak = await calculateStreak(userId);
 
   // Get recent progress
@@ -146,6 +147,15 @@ export async function sendDailyMotivation(userId: string) {
     },
   });
 
+  // Update last motivational message
+  await prisma.notificationPreference.update({
+    where: { userId },
+    data: {
+      lastMotivationalMessage: message.body,
+      lastMessageGeneratedAt: new Date(),
+    }
+  });
+
   return {
     success: results.webPush || results.email || results.sms,
     channels: results,
@@ -214,29 +224,9 @@ async function sendWebPush(userId: string, title: string, body: string): Promise
 // =====================
 
 async function sendEmail(userId: string, title: string, body: string): Promise<boolean> {
-  // Using Resend (you'll need to install: npm install resend)
-  // Uncomment when you have RESEND_API_KEY set up
-
   try {
     const user = await prisma.user.findUnique({ where: { id: userId } });
     if (!user?.email) return false;
-
-    // TODO: Implement with Resend
-    // const resend = new Resend(process.env.RESEND_API_KEY);
-    // await resend.emails.send({
-    //   from: 'TymeHealth Coach <coach@tyme-ai.com>',
-    //   to: user.email,
-    //   subject: title,
-    //   html: `
-    //     <div style="font-family: sans-serif; padding: 20px;">
-    //       <h2>${title}</h2>
-    //       <p style="font-size: 16px; line-height: 1.6;">${body}</p>
-    //       <a href="https://tyme-ai.com/app/dashboard" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background: #0070f3; color: white; text-decoration: none; border-radius: 6px;">
-    //         Open Dashboard
-    //       </a>
-    //     </div>
-    //   `,
-    // });
 
     console.log(`Email would be sent to ${user.email}: ${title}`);
     return true;
@@ -251,64 +241,13 @@ async function sendEmail(userId: string, title: string, body: string): Promise<b
 // =====================
 
 async function sendSMS(phoneNumber: string, message: string): Promise<boolean> {
-  // Using Twilio (you'll need to install: npm install twilio)
-  // Uncomment when you have Twilio credentials
-
   try {
-    // const twilio = require('twilio');
-    // const client = twilio(
-    //   process.env.TWILIO_ACCOUNT_SID,
-    //   process.env.TWILIO_AUTH_TOKEN
-    // );
-    // await client.messages.create({
-    //   body: message,
-    //   from: process.env.TWILIO_PHONE_NUMBER,
-    //   to: phoneNumber,
-    // });
-
     console.log(`SMS would be sent to ${phoneNumber}: ${message}`);
     return true;
   } catch (error) {
     console.error('SMS error:', error);
     return false;
   }
-}
-
-// =====================
-// HELPER FUNCTIONS
-// =====================
-
-async function calculateStreak(userId: string): Promise<number> {
-  const workouts = await prisma.workout.findMany({
-    where: {
-      userId,
-      completed: true,
-    },
-    orderBy: { date: 'desc' },
-    take: 365, // Check last year
-  });
-
-  let streak = 0;
-  let currentDate = new Date();
-  currentDate.setHours(0, 0, 0, 0);
-
-  for (const workout of workouts) {
-    const workoutDate = new Date(workout.date);
-    workoutDate.setHours(0, 0, 0, 0);
-
-    const daysDiff = Math.floor(
-      (currentDate.getTime() - workoutDate.getTime()) / (24 * 60 * 60 * 1000)
-    );
-
-    if (daysDiff === streak) {
-      streak++;
-      currentDate = workoutDate;
-    } else if (daysDiff > streak) {
-      break;
-    }
-  }
-
-  return streak;
 }
 
 // =====================

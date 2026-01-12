@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
 }
 
 // =====================
@@ -93,15 +93,15 @@ model Profile {
 
   // Preferences
   dietaryPreference String   @default("omnivore") // omnivore, vegetarian, vegan, keto, paleo
-  equipment         String[] // home_gym, barbell, dumbbells, bodyweight, full_gym
+  equipment         String   @default("") // home_gym, barbell, dumbbells, bodyweight, full_gym
   availableDays     Int      @default(3) // days per week
   minutesPerDay     Int      @default(45) // minutes per session
   weeklyWorkoutGoal Int      @default(5) // target workouts per week
   startingWeight    Float?   // starting weight for goal tracking
 
   // Health
-  injuries     String[] @default([])
-  medications  String[] @default([])
+  injuries     String @default("")
+  medications  String @default("")
 
   // AI Settings
   aiCoachTone  String   @default("supportive") // supportive, strict, humorous
