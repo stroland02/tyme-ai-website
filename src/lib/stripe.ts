@@ -1,11 +1,69 @@
 import Stripe from 'stripe';
 
-// Allow development without Stripe configured
-export const stripe = process.env.STRIPE_SECRET_KEY
-  ? new Stripe(process.env.STRIPE_SECRET_KEY.trim(), {
+// Validate and sanitize the Stripe secret key
+function getValidatedSecretKey(): string | null {
+  const key = process.env.STRIPE_SECRET_KEY;
+
+  if (!key) {
+    console.log('Stripe secret key not found in environment');
+    return null;
+  }
+
+  // Remove all whitespace (spaces, tabs, newlines, carriage returns)
+  const sanitized = key.replace(/\s/g, '');
+
+  // Basic validation: must start with sk_
+  if (!sanitized.startsWith('sk_')) {
+    console.error('Stripe secret key does not start with sk_');
+    return null;
+  }
+
+  // Validate minimum length (Stripe keys are ~100+ chars)
+  if (sanitized.length < 50) {
+    console.error('Stripe secret key is too short');
+    return null;
+  }
+
+  // Validate format: sk_live_ or sk_test_ followed by alphanumeric characters
+  if (!/^sk_(live|test)_[A-Za-z0-9]+$/.test(sanitized)) {
+    console.error('Invalid Stripe secret key format');
+    return null;
+  }
+
+  return sanitized;
+}
+
+// Lazy-loaded Stripe client to avoid module-level initialization issues
+let stripeInstance: Stripe | null = null;
+
+function getStripeClient(): Stripe | null {
+  if (stripeInstance) {
+    return stripeInstance;
+  }
+
+  const secretKey = getValidatedSecretKey();
+
+  if (!secretKey) {
+    return null;
+  }
+
+  try {
+    // Use stable API version (2024-11-20) with type assertion
+    // The TypeScript types expect a preview version, but we use stable
+    stripeInstance = new Stripe(secretKey, {
+      apiVersion: '2024-11-20' as any,
       typescript: true,
-    })
-  : null;
+    });
+
+    return stripeInstance;
+  } catch (error) {
+    console.error('Failed to initialize Stripe client:', error);
+    return null;
+  }
+}
+
+// Export getter instead of direct instance
+export const stripe = getStripeClient();
 
 // Price IDs for subscription plans (you'll get these from Stripe Dashboard)
 export const STRIPE_PLANS = {
@@ -28,10 +86,11 @@ export const STRIPE_PLANS = {
 
 // Helper to create a customer
 export async function createStripeCustomer(email: string, name?: string) {
-  if (!stripe) {
+  const client = getStripeClient();
+  if (!client) {
     throw new Error('Stripe is not configured');
   }
-  return await stripe.customers.create({
+  return await client.customers.create({
     email,
     name: name || undefined,
     metadata: {
@@ -48,10 +107,11 @@ export async function createCheckoutSession(
   successUrl: string,
   cancelUrl: string
 ) {
-  if (!stripe) {
+  const client = getStripeClient();
+  if (!client) {
     throw new Error('Stripe is not configured');
   }
-  return await stripe.checkout.sessions.create({
+  return await client.checkout.sessions.create({
     customer: customerId,
     mode: 'subscription',
     payment_method_types: ['card'],
@@ -80,10 +140,11 @@ export async function createBillingPortalSession(
   customerId: string,
   returnUrl: string
 ) {
-  if (!stripe) {
+  const client = getStripeClient();
+  if (!client) {
     throw new Error('Stripe is not configured');
   }
-  return await stripe.billingPortal.sessions.create({
+  return await client.billingPortal.sessions.create({
     customer: customerId,
     return_url: returnUrl,
   });
@@ -91,10 +152,11 @@ export async function createBillingPortalSession(
 
 // Helper to cancel subscription
 export async function cancelSubscription(subscriptionId: string) {
-  if (!stripe) {
+  const client = getStripeClient();
+  if (!client) {
     throw new Error('Stripe is not configured');
   }
-  return await stripe.subscriptions.cancel(subscriptionId);
+  return await client.subscriptions.cancel(subscriptionId);
 }
 
 // Helper to update subscription (upgrade/downgrade)
@@ -102,11 +164,12 @@ export async function updateSubscription(
   subscriptionId: string,
   newPriceId: string
 ) {
-  if (!stripe) {
+  const client = getStripeClient();
+  if (!client) {
     throw new Error('Stripe is not configured');
   }
-  const subscription = await stripe.subscriptions.retrieve(subscriptionId);
-  return await stripe.subscriptions.update(subscriptionId, {
+  const subscription = await client.subscriptions.retrieve(subscriptionId);
+  return await client.subscriptions.update(subscriptionId, {
     items: [
       {
         id: subscription.items.data[0].id,
