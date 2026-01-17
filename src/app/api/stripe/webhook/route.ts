@@ -144,6 +144,9 @@ async function handleSubscriptionUpdate(stripeSubscription: Stripe.Subscription)
     (s) => s.serviceId === serviceId
   );
 
+  // Type assertion for current_period_end
+  const periodEnd = (stripeSubscription as any).current_period_end;
+
   if (existingServiceSub) {
     // Update existing service subscription
     await prisma.serviceSubscription.update({
@@ -153,7 +156,7 @@ async function handleSubscriptionUpdate(stripeSubscription: Stripe.Subscription)
         stripePriceId: priceId || undefined,
         plan,
         status: stripeSubscription.status,
-        stripeCurrentPeriodEnd: new Date(stripeSubscription.current_period_end * 1000),
+        stripeCurrentPeriodEnd: periodEnd ? new Date(periodEnd * 1000) : undefined,
       },
     });
   } else {
@@ -167,7 +170,7 @@ async function handleSubscriptionUpdate(stripeSubscription: Stripe.Subscription)
         stripePriceId: priceId || undefined,
         plan,
         status: stripeSubscription.status,
-        stripeCurrentPeriodEnd: new Date(stripeSubscription.current_period_end * 1000),
+        stripeCurrentPeriodEnd: periodEnd ? new Date(periodEnd * 1000) : undefined,
       },
     });
   }
