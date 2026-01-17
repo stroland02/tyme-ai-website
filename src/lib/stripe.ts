@@ -2,8 +2,7 @@ import Stripe from 'stripe';
 
 // Allow development without Stripe configured
 export const stripe = process.env.STRIPE_SECRET_KEY
-  ? new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: '2025-12-15.clover' as any, // Cast to any to temporarily bypass if the type is slightly off, but the error suggested this exact string.
+  ? new Stripe(process.env.STRIPE_SECRET_KEY.trim(), {
       typescript: true,
     })
   : null;
