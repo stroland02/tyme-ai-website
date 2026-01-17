@@ -48,12 +48,9 @@ function getStripeClient(): Stripe | null {
   }
 
   try {
-    // Use stable API version (2024-11-20) with type assertion
-    // The TypeScript types expect a preview version, but we use stable
-    stripeInstance = new Stripe(secretKey, {
-      apiVersion: '2024-11-20' as any,
-      typescript: true,
-    });
+    // Initialize Stripe without explicit API version to use SDK default
+    // This avoids version mismatch errors between TypeScript types and Stripe API
+    stripeInstance = new Stripe(secretKey);
 
     return stripeInstance;
   } catch (error) {
