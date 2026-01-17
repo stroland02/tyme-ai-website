@@ -28,16 +28,45 @@ export async function POST(request: Request) {
       );
     }
 
-    // Get user's subscription
-    const userSubscription = await prisma.subscription.findUnique({
-      where: { userId: session.user.id },
+    // Get user with subscription
+    const user = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      include: { subscription: true },
     });
 
-    if (!userSubscription) {
+    if (!user) {
       return NextResponse.json(
-        { error: 'User subscription not found' },
+        { error: 'User not found' },
         { status: 404 }
       );
+    }
+
+    // Ensure user has a Stripe customer ID
+    let stripeCustomerId = user.subscription?.stripeCustomerId;
+
+    if (!stripeCustomerId) {
+      // Create Stripe customer if it doesn't exist
+      const { createStripeCustomer } = await import('@/lib/stripe');
+      const customer = await createStripeCustomer(
+        user.email,
+        user.name || undefined
+      );
+      stripeCustomerId = customer.id;
+
+      // Update or create subscription with customer ID
+      if (user.subscription) {
+        await prisma.subscription.update({
+          where: { id: user.subscription.id },
+          data: { stripeCustomerId },
+        });
+      } else {
+        await prisma.subscription.create({
+          data: {
+            userId: user.id,
+            stripeCustomerId,
+          },
+        });
+      }
     }
 
     // Get the appropriate price ID based on plan
@@ -60,14 +89,27 @@ export async function POST(request: Request) {
       );
     }
 
+    // Get the base URL for redirects
+    const baseUrl = process.env.NEXTAUTH_URL ||
+                    process.env.NEXT_PUBLIC_SITE_URL ||
+                    'https://tyme-ai.com';
+
+    // Ensure base URL doesn't have trailing slash
+    const cleanBaseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+
     // Create Stripe Checkout Session
     const checkoutSession = await createCheckoutSession(
-      userSubscription.stripeCustomerId,
+      stripeCustomerId,
       priceId,
       session.user.id,
-      `${process.env.NEXTAUTH_URL}/account/billing?success=true`,
-      `${process.env.NEXTAUTH_URL}/account/billing?canceled=true`
+      `${cleanBaseUrl}/account/billing?success=true`,
+      `${cleanBaseUrl}/account/billing?canceled=true`
     );
+
+    // Validate checkout session URL
+    if (!checkoutSession.url) {
+      throw new Error('Stripe checkout session created but URL is missing');
+    }
 
     return NextResponse.json({ url: checkoutSession.url });
   } catch (error: any) {
