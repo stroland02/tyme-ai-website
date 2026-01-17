@@ -3,11 +3,9 @@
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { Container } from "./Container";
-import { CodeCTA } from "../ui/CodeCTA";
 import { MobileMenu } from "./MobileMenu";
 import { Logo } from "../ui/Logo";
 import { ThemeToggle } from "../ui/ThemeToggle";
-import { Button } from "../ui/Button";
 
 export function Header() {
   const { data: session } = useSession();
@@ -85,7 +83,12 @@ export function Header() {
                 </Link>
               </>
             )}
-            <CodeCTA functionName="contact" href="/contact" size="sm" />
+            <Link
+              href="/contact"
+              className="px-4 py-2 text-sm font-mono border border-border hover:border-foreground/50 rounded transition-all"
+            >
+              contact()
+            </Link>
           </div>
 
           {/* Mobile Menu */}
