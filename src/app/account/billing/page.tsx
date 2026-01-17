@@ -107,7 +107,7 @@ export default function BillingPage() {
   }
 
   const activeSubscriptions = subscription?.serviceSubscriptions?.filter(s => s.status === 'active') || [];
-  const hasStripeConfigured = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+  const hasStripeConfigured = typeof window !== 'undefined' && !!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
 
   return (
     <main className="min-h-screen pt-24 pb-20 bg-background">
