@@ -6,6 +6,33 @@ export const genAI = process.env.GEMINI_API_KEY
   : null;
 
 /**
+ * Parse JSON from AI response with robust error handling
+ */
+function parseAIResponse(response: string): any {
+  // Extract JSON from markdown code blocks if present
+  const jsonMatch = response.match(/```(?:json)?\s*(\{[\s\S]*\})\s*```/) || response.match(/(\{[\s\S]*\})/);
+  if (!jsonMatch) {
+    throw new Error('Failed to parse AI response - no JSON found');
+  }
+
+  // Clean up common JSON syntax errors
+  let jsonString = jsonMatch[1]
+    .replace(/,\s*}/g, '}')           // Remove trailing commas in objects
+    .replace(/,\s*]/g, ']')           // Remove trailing commas in arrays
+    .replace(/[\u2018\u2019]/g, "'")  // Replace smart quotes with regular quotes
+    .replace(/[\u201C\u201D]/g, '"'); // Replace smart double quotes
+
+  try {
+    return JSON.parse(jsonString);
+  } catch (error: any) {
+    console.error('JSON Parse Error:', error.message);
+    console.error('Raw response:', response.substring(0, 500));
+    console.error('Attempted JSON:', jsonString.substring(0, 500));
+    throw new Error(`Failed to parse AI response: ${error.message}`);
+  }
+}
+
+/**
  * Generate a personalized workout plan using Gemini AI
  */
 export async function generateWorkoutPlan(params: {
@@ -60,13 +87,7 @@ Make it challenging but achievable for their fitness level. Include proper form 
   const result = await model.generateContent(prompt);
   const response = result.response.text();
 
-  // Extract JSON from markdown code blocks if present
-  const jsonMatch = response.match(/```(?:json)?\s*(\{[\s\S]*\})\s*```/) || response.match(/(\{[\s\S]*\})/);
-  if (!jsonMatch) {
-    throw new Error('Failed to parse AI response');
-  }
-
-  return JSON.parse(jsonMatch[1]);
+  return parseAIResponse(response);
 }
 
 /**
@@ -130,13 +151,7 @@ Make it balanced, nutritious, and aligned with their goals.`;
   const result = await model.generateContent(prompt);
   const response = result.response.text();
 
-  // Extract JSON from markdown code blocks if present
-  const jsonMatch = response.match(/```(?:json)?\s*(\{[\s\S]*\})\s*```/) || response.match(/(\{[\s\S]*\})/);
-  if (!jsonMatch) {
-    throw new Error('Failed to parse AI response');
-  }
-
-  return JSON.parse(jsonMatch[1]);
+  return parseAIResponse(response);
 }
 
 /**
