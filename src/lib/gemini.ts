@@ -48,7 +48,7 @@ export async function generateWorkoutPlan(params: {
 
   const { fitnessLevel, goals, equipment, duration, workoutType = 'strength' } = params;
 
-  const prompt = `You are an expert fitness coach. Generate a detailed workout plan with the following requirements:
+  const prompt = `You are an expert fitness coach. Generate a workout plan with the following requirements:
 
 Fitness Level: ${fitnessLevel}
 Goals: ${goals.join(', ')}
@@ -56,10 +56,10 @@ Available Equipment: ${equipment.join(', ')}
 Workout Duration: ${duration} minutes
 Workout Type: ${workoutType}
 
-Return a JSON object with this exact structure:
+Return a JSON object with this EXACT structure (keep notes concise, 1-2 sentences max):
 {
   "name": "Brief workout name",
-  "warmup": "5-minute warmup description",
+  "warmup": "5-min warmup description",
   "exercises": [
     {
       "name": "Exercise name",
@@ -67,20 +67,20 @@ Return a JSON object with this exact structure:
       "reps": 12,
       "weight": 0,
       "rest": 60,
-      "notes": "Form tips and modifications"
+      "notes": "Brief form tip"
     }
   ],
-  "cooldown": "5-minute cooldown description",
-  "tips": ["Coaching tip 1", "Coaching tip 2"]
+  "cooldown": "5-min cooldown",
+  "tips": ["Tip 1", "Tip 2"]
 }
 
-Make it challenging but achievable for their fitness level. Include proper form cues and safety tips.`;
+IMPORTANT: Keep all text fields concise. Make it challenging but achievable for their fitness level.`;
 
   const model = genAI.getGenerativeModel({
     model: 'gemini-2.5-flash',
     generationConfig: {
       temperature: 0.7,
-      maxOutputTokens: 2000,
+      maxOutputTokens: 4000, // Increased for longer workout plans
     }
   });
 
@@ -144,7 +144,7 @@ Make it balanced, nutritious, and aligned with their goals.`;
     model: 'gemini-2.5-flash',
     generationConfig: {
       temperature: 0.7,
-      maxOutputTokens: 2500,
+      maxOutputTokens: 5000, // Increased for detailed meal plans
     }
   });
 
