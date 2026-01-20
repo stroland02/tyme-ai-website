@@ -62,6 +62,12 @@ function getStripeClient(): Stripe | null {
 // Export getter instead of direct instance
 export const stripe = getStripeClient();
 
+// Helper to sanitize environment variables (remove quotes, whitespace, newlines)
+function sanitizeEnvVar(value: string | undefined): string {
+  if (!value) return '';
+  return value.replace(/["'\s\n\r\t\\]+/g, '');
+}
+
 // Price IDs for subscription plans (you'll get these from Stripe Dashboard)
 export const STRIPE_PLANS = {
   FREE_TRIAL: {
@@ -72,12 +78,12 @@ export const STRIPE_PLANS = {
   PRO_MONTHLY: {
     name: 'Pro Monthly',
     price: 1499, // $14.99 in cents
-    priceId: process.env.STRIPE_PRICE_PRO_MONTHLY || '', // Set in .env
+    priceId: sanitizeEnvVar(process.env.STRIPE_PRICE_PRO_MONTHLY),
   },
   ELITE_MONTHLY: {
     name: 'Elite Monthly',
     price: 2999, // $29.99 in cents
-    priceId: process.env.STRIPE_PRICE_ELITE_MONTHLY || '', // Set in .env
+    priceId: sanitizeEnvVar(process.env.STRIPE_PRICE_ELITE_MONTHLY),
   },
 };
 
