@@ -89,13 +89,17 @@ export async function POST(request: Request) {
       );
     }
 
-    // Get the base URL for redirects
-    const baseUrl = process.env.NEXTAUTH_URL ||
-                    process.env.NEXT_PUBLIC_SITE_URL ||
-                    'https://tyme-ai.com';
+    // Get the base URL for redirects and clean it thoroughly
+    const rawBaseUrl = process.env.NEXTAUTH_URL ||
+                       process.env.NEXT_PUBLIC_SITE_URL ||
+                       'https://tyme-ai.com';
 
-    // Ensure base URL doesn't have trailing slash
-    const cleanBaseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+    // Remove all whitespace, quotes, newlines, and escape characters
+    const cleanBaseUrl = rawBaseUrl
+      .replace(/["'\s\n\r\t\\]+/g, '') // Remove quotes, whitespace, newlines, tabs, backslashes
+      .replace(/\/$/, ''); // Remove trailing slash
+
+    console.log('Base URL cleaned:', { raw: rawBaseUrl, clean: cleanBaseUrl });
 
     // Create Stripe Checkout Session
     const checkoutSession = await createCheckoutSession(
